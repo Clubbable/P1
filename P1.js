@@ -124,6 +124,7 @@ var time_start; // start time of animation
 var time_end; // end time of animation
 var p; // current frame
 var animate = false; // animate?
+var p_store = 0;
 
 // function init_animation()
 // Initializes parameters and sets animate flag to true.
@@ -150,7 +151,7 @@ function updateBody() {
         break;
       }
 
-      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame 
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
 
       var rotateZ = new THREE.Matrix4().set(1,        0,         0,        0, 
                                             0, Math.cos(-p),-Math.sin(-p), 0, 
@@ -160,7 +161,8 @@ function updateBody() {
       var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
       torso.setMatrix(torsoRotMatrix);
 
-      head.rotateBodyPart(-0.013, true, false, false);
+      head.rotateBodyPart(p_store-p, true, false, false);
+      p_store = p;
 
       break
 
