@@ -71,8 +71,8 @@ function makeCube() {
 
 // GEOMETRY
 var torsoGeometry = makeCube();
-var non_uniform_scale = new THREE.Matrix4().set(5,0,0,0, 0,5,0,0, 0,0,8,0, 0,0,0,1);
-torsoGeometry.applyMatrix(non_uniform_scale);
+var torsoSize = new THREE.Matrix4().set(5,0,0,0, 0,5,0,0, 0,0,8,0, 0,0,0,1);
+torsoGeometry.applyMatrix(torsoSize);
 
 // TO-DO: SPECIFY THE REST OF YOUR STAR-NOSE MOLE'S GEOMETRY. 
 // Note: You will be using transformation matrices to set the shape. 
@@ -85,7 +85,6 @@ torsoGeometry.applyMatrix(non_uniform_scale);
 
 // MATRICES
 var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,0, 0,0,0,1);
-var headMatrix = MathHelper.translateMatrix(10,10,6, torsoMatrix);
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
 // Note: Use of parent attribute is not allowed.
@@ -99,8 +98,10 @@ var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
 torso.setMatrix(torsoMatrix)
 scene.add(torso);
 
+var headSize = new THREE.Matrix4().set(4,0,0,0, 0,4,0,0, 0,0,4,0, 0,0,0,1);
+
 var head = new BodyPart(scene);
-head.createBodyPart(non_uniform_scale, headMatrix);
+head.createBodyPart(headSize, 0,0,6);
 
 // TO-DO: PUT TOGETHER THE REST OF YOUR STAR-NOSED MOLE AND ADD TO THE SCENE!
 // Hint: Hint: Add one piece of geometry at a time, then implement the motion for that part. 
@@ -157,7 +158,9 @@ function updateBody() {
                                             0,        0,         0,        1);
 
       var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
-      torso.setMatrix(torsoRotMatrix); 
+      torso.setMatrix(torsoRotMatrix);
+
+      head.rotateBodyPart(-p, true, false, false);
       break
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
