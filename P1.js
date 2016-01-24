@@ -66,36 +66,15 @@ function makeCube() {
   return unitCube;
 }
 
-// Create head, torso, nose, tail, paws
-var headSize = new THREE.Matrix4().set(4,0,0,0, 0,4,0,0, 0,0,2.5,0, 0,0,0,1);
+// Create head, torso
+var headSize = new THREE.Matrix4().set(4,0,0,0, 0,4,0,0, 0,0,4,0, 0,0,0,1);
 var torsoSize = new THREE.Matrix4().set(5,0,0,0, 0,5,0,0, 0,0,8,0, 0,0,0,1);
-var noseSize = new THREE.Matrix4().set(2.3,0,0,0, 0,2.3,0,0, 0,0,1.5,0, 0,0,0,1);
-var tailSize = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,5,0, 0,0,0,1);
-var pawSize = new THREE.Matrix4().set(3,0,0,0, 0,1,0,0, 0,0,6,0, 0,0,0,1);
 
 var head = new BodyPart(scene);
-head.createBodyPart(headSize, 0,0,5,0,0,0);
+head.createBodyPart(headSize, 0,0,6);
 
 var torso = new BodyPart(scene);
-torso.createBodyPart(torsoSize, 0,0,0,0,0,0);
-
-var nose = new BodyPart(scene);
-nose.createBodyPart(noseSize, 0,0,7,0,0,0);
-
-var tail = new BodyPart(scene);
-tail.createBodyPart(tailSize, 0,0,-5,0,0,0);
-
-var paw1 = new BodyPart(scene);
-paw1.createBodyPart(pawSize, 2,-2.5,4,20*Math.PI/180,0,0);
-
-var paw2 = new BodyPart(scene);
-paw2.createBodyPart(pawSize, -2,-2.5,4,20*Math.PI/180,0,0);
-
-var paw3 = new BodyPart(scene);
-paw3.createBodyPart(pawSize, 2,-2.5,-3,20*Math.PI/180,0,0);
-
-var paw4 = new BodyPart(scene);
-paw4.createBodyPart(pawSize, -2,-2.5,-3,20*Math.PI/180,0,0);
+torso.createBodyPart(torsoSize, 0,0,0);
 
 // TO-DO: PUT TOGETHER THE REST OF YOUR STAR-NOSED MOLE AND ADD TO THE SCENE!
 // Hint: Hint: Add one piece of geometry at a time, then implement the motion for that part. 
@@ -136,42 +115,33 @@ function init_animation(p_start,p_end,t_length){
 function updateBody() {
   switch(true)
   {
-      //Tilt up and down
       case(key == "U" && animate):
+      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
-          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+      if (time > time_end){
+        p = p1;
+        animate = false;
+        break;
+      }
 
-          if (time > time_end){
-            p = p1;
-            animate = false;
-            break;
-          }
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
 
-          p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
+      //Rotate head, torso around x-axis
+      var deltaRotationAngleInRad = p_store-p;
+      torso.rotateBodyPart(deltaRotationAngleInRad, true, false, false);
+      head.rotateBodyPart(deltaRotationAngleInRad, true, false, false);
 
-          //Rotate head, torso, nose, tail, paws around x-axis
-          var deltaRotationAngleInRad = p_store-p;
+      p_store = p;
 
-          torso.rotateBodyPartRelativeToOrigin(deltaRotationAngleInRad, true, false, false);
-          head.rotateBodyPartRelativeToOrigin(deltaRotationAngleInRad, true, false, false);
-          nose.rotateBodyPartRelativeToOrigin(deltaRotationAngleInRad, true, false, false);
-          tail.rotateBodyPartRelativeToOrigin(deltaRotationAngleInRad, true, false, false);
-          paw1.rotateBodyPartRelativeToOrigin(deltaRotationAngleInRad, true, false, false);
-          paw2.rotateBodyPartRelativeToOrigin(deltaRotationAngleInRad, true, false, false);
-          paw3.rotateBodyPartRelativeToOrigin(deltaRotationAngleInRad, true, false, false);
-          paw4.rotateBodyPartRelativeToOrigin(deltaRotationAngleInRad, true, false, false);
-
-          p_store = p;
-
-          break;
+      break
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
       // Note: Remember spacebar sets jumpcut/animate!
       
 
 
-      default:
-          break;
+    default:
+      break;
   }
 }
 
