@@ -160,7 +160,8 @@ function updateBody() {
       var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
       torso.setMatrix(torsoRotMatrix);
 
-      head.rotateBodyPart(-p, true, false, false);
+      head.rotateBodyPart(-0.013, true, false, false);
+
       break
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
