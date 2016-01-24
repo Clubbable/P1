@@ -85,7 +85,6 @@ torsoGeometry.applyMatrix(non_uniform_scale);
 
 // MATRICES
 var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,0, 0,0,0,1);
-var headMatrix = MathHelper.translateMatrix(10,10,6, torsoMatrix);
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
 // Note: Use of parent attribute is not allowed.
@@ -98,9 +97,6 @@ var headMatrix = MathHelper.translateMatrix(10,10,6, torsoMatrix);
 var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
 torso.setMatrix(torsoMatrix)
 scene.add(torso);
-
-var head = new BodyPart(scene);
-head.createBodyPart(non_uniform_scale, headMatrix);
 
 // TO-DO: PUT TOGETHER THE REST OF YOUR STAR-NOSED MOLE AND ADD TO THE SCENE!
 // Hint: Hint: Add one piece of geometry at a time, then implement the motion for that part. 
