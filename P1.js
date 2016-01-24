@@ -57,6 +57,9 @@ var grid = new THREE.Line(gridGeometry,gridMaterial,THREE.LinePieces);
 //   YOUR WORK STARTS BELOW    //
 /////////////////////////////////
 
+// MATERIALS
+// Note: Feel free to be creative with this! 
+var normalMaterial = new THREE.MeshNormalMaterial();
 
 // function drawCube()
 // Draws a unit cube centered about the origin.
@@ -66,15 +69,39 @@ function makeCube() {
   return unitCube;
 }
 
-// Create head, torso
-var headSize = new THREE.Matrix4().set(4,0,0,0, 0,4,0,0, 0,0,4,0, 0,0,0,1);
+// GEOMETRY
+var torsoGeometry = makeCube();
 var torsoSize = new THREE.Matrix4().set(5,0,0,0, 0,5,0,0, 0,0,8,0, 0,0,0,1);
+torsoGeometry.applyMatrix(torsoSize);
+
+// TO-DO: SPECIFY THE REST OF YOUR STAR-NOSE MOLE'S GEOMETRY. 
+// Note: You will be using transformation matrices to set the shape. 
+// Note: You are not allowed to use the tools Three.js provides for 
+//       rotation, translation and scaling.
+// Note: The torso has been done for you (but feel free to modify it!)  
+// Hint: Explicity declare new matrices using Matrix4().set     
+
+
+
+// MATRICES
+var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,0, 0,0,0,1);
+
+// TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
+// Note: Use of parent attribute is not allowed.
+// Hint: Keep hierarchies in mind!   
+// Hint: Play around with the headTorsoMatrix values, what changes in the render? Why?         
+
+
+
+// CREATE BODY
+var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
+torso.setMatrix(torsoMatrix)
+scene.add(torso);
+
+var headSize = new THREE.Matrix4().set(4,0,0,0, 0,4,0,0, 0,0,4,0, 0,0,0,1);
 
 var head = new BodyPart(scene);
 head.createBodyPart(headSize, 0,0,6);
-
-var torso = new BodyPart(scene);
-torso.createBodyPart(torsoSize, 0,0,0);
 
 // TO-DO: PUT TOGETHER THE REST OF YOUR STAR-NOSED MOLE AND ADD TO THE SCENE!
 // Hint: Hint: Add one piece of geometry at a time, then implement the motion for that part. 
@@ -126,11 +153,15 @@ function updateBody() {
 
       p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
 
-      //Rotate head, torso around x-axis
-      var deltaRotationAngleInRad = p_store-p;
-      torso.rotateBodyPart(deltaRotationAngleInRad, true, false, false);
-      head.rotateBodyPart(deltaRotationAngleInRad, true, false, false);
+      var rotateZ = new THREE.Matrix4().set(1,        0,         0,        0, 
+                                            0, Math.cos(-p),-Math.sin(-p), 0, 
+                                            0, Math.sin(-p), Math.cos(-p), 0,
+                                            0,        0,         0,        1);
 
+      var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
+      torso.setMatrix(torsoRotMatrix);
+
+      head.rotateBodyPart(p_store-p, true, false, false);
       p_store = p;
 
       break

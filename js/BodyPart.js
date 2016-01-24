@@ -1,8 +1,6 @@
 /**
  * Created by marti on 2016-01-23.
  */
-
-//Class represents one part of the body (head, shoulder, finger...)
 function BodyPart(scene)
 {
     this.scene = scene;
@@ -10,7 +8,6 @@ function BodyPart(scene)
     this.bodyPart = null;
     this.bodyPartGeometryMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,0, 0,0,0,1);
 
-    //Creates the body part and draws it with size objectSizeMatrix, at locationX, locationY, locationZ
     this.createBodyPart = function(objectSizeMatrix, locationX, locationY, locationZ)
     {
         var objectGeometry = makeCube();
@@ -28,23 +25,31 @@ function BodyPart(scene)
         this.scene.add(this.bodyPart);
     };
 
-    //Rotate the body part AROUND AXIS CENTERED AT ORIGIN (0,0,0)
-    //Details: Moves the body part from where it's placed back to origin, then rotates it at origin, then move it back
-    this.rotateBodyPart = function(rotationAngleInRad, xAxis, yAxis, zAxis)
+    this.getBodyPart = function()
+    {
+        return this.bodyPart;
+    };
+
+    this.getBodyPartGeometry = function()
+    {
+        return this.bodyPartGeometryMatrix;
+    }
+
+    this.rotateBodyPart = function(rotationAngle, xAxis, yAxis, zAxis)
     {
         this.moveBodyPart(-this.locationX, -this.locationY, -this.locationZ);
 
         if(xAxis)
         {
-            this.bodyPartGeometryMatrix = MathHelper.rotateMatrixAroundX(rotationAngleInRad, this.bodyPartGeometryMatrix);
+            this.bodyPartGeometryMatrix = MathHelper.rotateMatrixAroundX(rotationAngle, this.bodyPartGeometryMatrix);
         }
         else if(yAxis)
         {
-            this.bodyPartGeometryMatrix = MathHelper.rotateMatrixAroundY(rotationAngleInRad, this.bodyPartGeometryMatrix);
+            this.bodyPartGeometryMatrix = MathHelper.rotateMatrixAroundY(rotationAngle, this.bodyPartGeometryMatrix);
         }
         else if(zAxis)
         {
-            this.bodyPartGeometryMatrix = MathHelper.rotateMatrixAroundZ(rotationAngleInRad, this.bodyPartGeometryMatrix);
+            this.bodyPartGeometryMatrix = MathHelper.rotateMatrixAroundZ(rotationAngle, this.bodyPartGeometryMatrix);
         }
 
         this.bodyPart.setMatrix(this.bodyPartGeometryMatrix);
@@ -52,7 +57,6 @@ function BodyPart(scene)
         this.moveBodyPart(this.locationX, this.locationY, this.locationZ);
     }
 
-    //Move the body part by x,y,z
     this.moveBodyPart = function(x, y, z)
     {
         this.bodyPartGeometryMatrix = MathHelper.translateMatrix(x, y, z, this.bodyPartGeometryMatrix);

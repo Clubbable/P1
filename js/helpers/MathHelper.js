@@ -22,25 +22,25 @@ MathHelper.translateMatrix = function(translateX, translateY, translateZ, matrix
 }
 
 //returns the result of rotating matrixToRotate by rotationAngle around x-axis
-MathHelper.rotateMatrixAroundX = function(rotationAngleInRad, matrixToRotate)
+MathHelper.rotateMatrixAroundX = function(rotationAngle, matrixToRotate)
 {
-    var multiply = new THREE.Matrix4().set(1,0,0,0, 0,Math.cos(rotationAngleInRad),-Math.sin(rotationAngleInRad),0,
-                                            0,Math.sin(rotationAngleInRad),Math.cos(rotationAngleInRad),0, 0,0,0,1);
+    var multiply = new THREE.Matrix4().set(1,0,0,0, 0,Math.cos(rotationAngle),-Math.sin(rotationAngle),0,
+                                            0,Math.sin(rotationAngle),Math.cos(rotationAngle),0, 0,0,0,1);
     return new THREE.Matrix4().multiplyMatrices(matrixToRotate,multiply)
 }
 
 //returns the result of rotating matrixToRotate by rotationAngle around y-axis
-MathHelper.rotateMatrixAroundY = function(rotationAngleInRad, matrixToRotate)
+MathHelper.rotateMatrixAroundY = function(rotationAngle, matrixToRotate)
 {
-    var multiply = new THREE.Matrix4().set(Math.cos(rotationAngleInRad),0,Math.sin(rotationAngleInRad),0, 0,1,0,0,
-        -Math.sin(rotationAngleInRad),0,Math.cos(rotationAngleInRad),0, 0,0,0,1);
+    var multiply = new THREE.Matrix4().set(Math.cos(rotationAngle),0,Math.sin(rotationAngle),0, 0,1,0,0,
+        -Math.sin(rotationAngle),0,Math.cos(rotationAngle),0, 0,0,0,1);
     return new THREE.Matrix4().multiplyMatrices(matrixToRotate,multiply)
 }
 
 //returns the result of rotating matrixToRotate by rotationAngle around z-axis
-MathHelper.rotateMatrixAroundZ = function(rotationAngleInRad, matrixToRotate)
+MathHelper.rotateMatrixAroundZ = function(rotationAngle, matrixToRotate)
 {
-    var multiply = new THREE.Matrix4().set(Math.cos(rotationAngleInRad),-Math.sin(rotationAngleInRad),0,0,Math.sin(rotationAngleInRad),Math.cos(rotationAngleInRad),0,0,
+    var multiply = new THREE.Matrix4().set(Math.cos(rotationAngle),-Math.sin(rotationAngle),0,0,Math.sin(rotationAngle),Math.cos(rotationAngle),0,0,
         0,0,1,0, 0,0,0,1);
     return new THREE.Matrix4().multiplyMatrices(matrixToRotate,multiply)
 }
