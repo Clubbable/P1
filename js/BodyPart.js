@@ -13,10 +13,6 @@ function BodyPart(scene)
         var objectGeometry = makeCube();
         objectGeometry.applyMatrix(objectSizeMatrix);
 
-        this.locationX = locationX;
-        this.locationY = locationY;
-        this.locationZ = locationZ;
-
         this.bodyPart = new THREE.Mesh(objectGeometry, this.normalMatrial);
 
         this.bodyPartGeometryMatrix = MathHelper.translateMatrix(locationX, locationY, locationZ, this.bodyPartGeometryMatrix);
@@ -37,8 +33,6 @@ function BodyPart(scene)
 
     this.rotateBodyPart = function(rotationAngle, xAxis, yAxis, zAxis)
     {
-        this.moveBodyPart(-this.locationX, -this.locationY, -this.locationZ);
-
         if(xAxis)
         {
             this.bodyPartGeometryMatrix = MathHelper.rotateMatrixAroundX(rotationAngle, this.bodyPartGeometryMatrix);
@@ -52,14 +46,6 @@ function BodyPart(scene)
             this.bodyPartGeometryMatrix = MathHelper.rotateMatrixAroundZ(rotationAngle, this.bodyPartGeometryMatrix);
         }
 
-        this.bodyPart.setMatrix(this.bodyPartGeometryMatrix);
-
-        this.moveBodyPart(this.locationX, this.locationY, this.locationZ);
-    }
-
-    this.moveBodyPart = function(x, y, z)
-    {
-        this.bodyPartGeometryMatrix = MathHelper.translateMatrix(x, y, z, this.bodyPartGeometryMatrix);
         this.bodyPart.setMatrix(this.bodyPartGeometryMatrix);
     }
 };
