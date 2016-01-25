@@ -90,6 +90,10 @@ var PawGeometry = makeCube();
 var PawScale = new THREE.Matrix4().set(3,0,0,0, 0,1,0,0, 0,0,5,0, 0,0,0,1);
 PawGeometry.applyMatrix(PawScale);
 
+var clawGeometry = makeCube();
+var clawScale = new THREE.Matrix4().set(0.4,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
+clawGeometry.applyMatrix(clawScale);
+
 // TO-DO: SPECIFY THE REST OF YOUR STAR-NOSE MOLE'S GEOMETRY. 
 // Note: You will be using transformation matrices to set the shape. 
 // Note: You are not allowed to use the tools Three.js provides for 
@@ -100,6 +104,8 @@ PawGeometry.applyMatrix(PawScale);
 
 
 // MATRICES: Specifies the location
+
+//Relative to torso
 var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,10, 0,0,1,0, 0,0,0,1);
 var headMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,5, 0,0,0,1);
 var noseMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,6.5, 0,0,0,1);
@@ -109,6 +115,13 @@ var frontRightPawMatrix = new THREE.Matrix4().set(1,0,0,-2.5, 0,1,0,-2.5, 0,0,1,
 var frontLeftPawMatrix = new THREE.Matrix4().set(1,0,0,2.5, 0,1,0,-2.5, 0,0,1,4, 0,0,0,1);
 var backRightPawMatrix = new THREE.Matrix4().set(1,0,0,-2.5, 0,1,0,-3.5, 0,0,1,-2, 0,0,0,1);
 var backLeftPawMatrix = new THREE.Matrix4().set(1,0,0,2.5, 0,1,0,-3.5, 0,0,1,-2, 0,0,0,1);
+
+//Relative to respective paws
+var frontRightClaw1Matrix = new THREE.Matrix4().set(1,0,0,1.4, 0,1,0,0, 0,0,1,3, 0,0,0,1);
+var frontRightClaw2Matrix = new THREE.Matrix4().set(1,0,0,0.7, 0,1,0,0, 0,0,1,3, 0,0,0,1);
+var frontRightClaw3Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,3, 0,0,0,1);
+var frontRightClaw4Matrix = new THREE.Matrix4().set(1,0,0,-0.7, 0,1,0,0, 0,0,1,3, 0,0,0,1);
+var frontRightClaw5Matrix = new THREE.Matrix4().set(1,0,0,-1.4, 0,1,0,0, 0,0,1,3, 0,0,0,1);
 
 var headMatrixRelativeToTorso =  new THREE.Matrix4().multiplyMatrices(torsoMatrix, headMatrix);
 var noseMatrixRelativeToTorso =  new THREE.Matrix4().multiplyMatrices(torsoMatrix, noseMatrix);
@@ -126,6 +139,12 @@ var backRightPawMatrixRelativeToTorso = new THREE.Matrix4().multiplyMatrices(tor
 backRightPawMatrixRelativeToTorso.multiplyMatrices(backRightPawMatrixRelativeToTorso, rotate20Degrees);
 var backLeftPawMatrixRelativeToTorso = new THREE.Matrix4().multiplyMatrices(torsoMatrix, backLeftPawMatrix);
 backLeftPawMatrixRelativeToTorso.multiplyMatrices(backLeftPawMatrixRelativeToTorso, rotate20Degrees);
+
+var frontRightClaw1RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, frontRightClaw1Matrix);
+var frontRightClaw2RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, frontRightClaw2Matrix);
+var frontRightClaw3RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, frontRightClaw3Matrix);
+var frontRightClaw4RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, frontRightClaw4Matrix);
+var frontRightClaw5RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, frontRightClaw5Matrix);
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
 // Note: Use of parent attribute is not allowed.
@@ -167,6 +186,26 @@ var backLeftPaw = new THREE.Mesh(PawGeometry,normalMaterial);
 backLeftPaw.setMatrix(backLeftPawMatrixRelativeToTorso)
 scene.add(backLeftPaw);
 
+var frontRightClaw1 = new THREE.Mesh(clawGeometry,normalMaterial);
+frontRightClaw1.setMatrix(frontRightClaw1RelativeToPaw)
+scene.add(frontRightClaw1);
+
+var frontRightClaw2 = new THREE.Mesh(clawGeometry,normalMaterial);
+frontRightClaw2.setMatrix(frontRightClaw2RelativeToPaw)
+scene.add(frontRightClaw2);
+
+var frontRightClaw3 = new THREE.Mesh(clawGeometry,normalMaterial);
+frontRightClaw3.setMatrix(frontRightClaw3RelativeToPaw)
+scene.add(frontRightClaw3);
+
+var frontRightClaw4 = new THREE.Mesh(clawGeometry,normalMaterial);
+frontRightClaw4.setMatrix(frontRightClaw4RelativeToPaw)
+scene.add(frontRightClaw4);
+
+var frontRightClaw5 = new THREE.Mesh(clawGeometry,normalMaterial);
+frontRightClaw5.setMatrix(frontRightClaw5RelativeToPaw)
+scene.add(frontRightClaw5);
+
 // TO-DO: PUT TOGETHER THE REST OF YOUR STAR-NOSED MOLE AND ADD TO THE SCENE!
 // Hint: Hint: Add one piece of geometry at a time, then implement the motion for that part. 
 //             Then you can make sure your hierarchy still works properly after each step.
@@ -205,6 +244,7 @@ function init_animation(p_start,p_end,t_length){
 function updateBody() {
   switch(true)
   {
+      //Body tilt up
       case(key == "U" && animate):
           var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -249,6 +289,83 @@ function updateBody() {
           backLeftPawRotMatrix.multiplyMatrices(backLeftPawRotMatrix, rotate20Degrees);
           backLeftPaw.setMatrix(backLeftPawRotMatrix);
 
+          var frontPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, frontRightClaw1Matrix);
+          frontRightClaw1.setMatrix(frontPawClaw1RotMatrix);
+
+          var frontPawClaw2RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, frontRightClaw2Matrix);
+          frontRightClaw2.setMatrix(frontPawClaw2RotMatrix);
+
+          var frontPawClaw3RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, frontRightClaw3Matrix);
+          frontRightClaw3.setMatrix(frontPawClaw3RotMatrix);
+
+          var frontPawClaw4RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, frontRightClaw4Matrix);
+          frontRightClaw4.setMatrix(frontPawClaw4RotMatrix);
+
+          var frontPawClaw5RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, frontRightClaw5Matrix);
+          frontRightClaw5.setMatrix(frontPawClaw5RotMatrix);
+
+          break;
+
+      //Body tilt down
+      case(key == "D" && animate):
+          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+          if (time > time_end){
+              p = p1;
+              animate = false;
+              break;
+          }
+
+          p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
+
+          var rotateZ = new THREE.Matrix4().set(1,        0,         0,        0,
+              0, Math.cos(-p),-Math.sin(-p), 0,
+              0, Math.sin(-p), Math.cos(-p), 0,
+              0,        0,         0,        1);
+
+          var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
+          torso.setMatrix(torsoRotMatrix);
+
+          var headRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, headMatrix);
+          head.setMatrix(headRotMatrix);
+
+          var tailRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, tailMatrix);
+          tail.setMatrix(tailRotMatrix);
+
+          var noseRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, noseMatrix);
+          nose.setMatrix(noseRotMatrix);
+
+          var frontRightPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, frontRightPawMatrix);
+          frontRightPawRotMatrix.multiplyMatrices(frontRightPawRotMatrix, rotate20Degrees);
+          frontRightPaw.setMatrix(frontRightPawRotMatrix);
+
+          var frontLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, frontLeftPawMatrix);
+          frontLeftPawRotMatrix.multiplyMatrices(frontLeftPawRotMatrix, rotate20Degrees);
+          frontLeftPaw.setMatrix(frontLeftPawRotMatrix);
+
+          var backRightPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backRightPawMatrix);
+          backRightPawRotMatrix.multiplyMatrices(backRightPawRotMatrix, rotate20Degrees);
+          backRightPaw.setMatrix(backRightPawRotMatrix);
+
+          var backLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backLeftPawMatrix);
+          backLeftPawRotMatrix.multiplyMatrices(backLeftPawRotMatrix, rotate20Degrees);
+          backLeftPaw.setMatrix(backLeftPawRotMatrix);
+
+          var frontPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, frontRightClaw1Matrix);
+          frontRightClaw1.setMatrix(frontPawClaw1RotMatrix);
+
+          var frontPawClaw2RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, frontRightClaw2Matrix);
+          frontRightClaw2.setMatrix(frontPawClaw2RotMatrix);
+
+          var frontPawClaw3RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, frontRightClaw3Matrix);
+          frontRightClaw3.setMatrix(frontPawClaw3RotMatrix);
+
+          var frontPawClaw4RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, frontRightClaw4Matrix);
+          frontRightClaw4.setMatrix(frontPawClaw4RotMatrix);
+
+          var frontPawClaw5RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, frontRightClaw5Matrix);
+          frontRightClaw5.setMatrix(frontPawClaw5RotMatrix);
+
           break;
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
@@ -277,6 +394,8 @@ keyboard.domElement.addEventListener('keydown',function(event){
     camera.lookAt(scene.position);}
   else if(keyboard.eventMatches(event,"U")){ 
     (key == "U")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "U")}
+  else if(keyboard.eventMatches(event,"D")){
+      (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/4,1), key = "D")}
 
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
