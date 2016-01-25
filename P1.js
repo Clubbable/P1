@@ -102,8 +102,8 @@ PawGeometry.applyMatrix(PawScale);
 // MATRICES: Specifies the location
 var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,10, 0,0,1,0, 0,0,0,1);
 var headMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,5, 0,0,0,1);
-var noseMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,6, 0,0,0,1);
-var tailMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-4, 0,0,0,1);
+var noseMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,6.5, 0,0,0,1);
+var tailMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-6, 0,0,0,1);
 
 var frontRightPawMatrix = new THREE.Matrix4().set(1,0,0,-2.5, 0,1,0,-2.5, 0,0,1,4, 0,0,0,1);
 var frontLeftPawMatrix = new THREE.Matrix4().set(1,0,0,2.5, 0,1,0,-2.5, 0,0,1,4, 0,0,0,1);
@@ -224,14 +224,32 @@ function updateBody() {
           var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
           torso.setMatrix(torsoRotMatrix);
 
-          //Follows the rotation of torso. The head doesn't really rotate, it just keeps the constant distance from torso
           var headRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, headMatrix);
-
-          //In addition to following the distance from the torso, the head also rotates around itself
-          //var headRotMatrix = new THREE.Matrix4().multiplyMatrices(headMatrix,rotateZ);
           head.setMatrix(headRotMatrix);
 
-          break
+          var tailRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, tailMatrix);
+          tail.setMatrix(tailRotMatrix);
+
+          var noseRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, noseMatrix);
+          nose.setMatrix(noseRotMatrix);
+
+          var frontRightPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, frontRightPawMatrix);
+          frontRightPawRotMatrix.multiplyMatrices(frontRightPawRotMatrix, rotate20Degrees);
+          frontRightPaw.setMatrix(frontRightPawRotMatrix);
+
+          var frontLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, frontLeftPawMatrix);
+          frontLeftPawRotMatrix.multiplyMatrices(frontLeftPawRotMatrix, rotate20Degrees);
+          frontLeftPaw.setMatrix(frontLeftPawRotMatrix);
+
+          var backRightPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backRightPawMatrix);
+          backRightPawRotMatrix.multiplyMatrices(backRightPawRotMatrix, rotate20Degrees);
+          backRightPaw.setMatrix(backRightPawRotMatrix);
+
+          var backLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backLeftPawMatrix);
+          backLeftPawRotMatrix.multiplyMatrices(backLeftPawRotMatrix, rotate20Degrees);
+          backLeftPaw.setMatrix(backLeftPawRotMatrix);
+
+          break;
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
       // Note: Remember spacebar sets jumpcut/animate!
