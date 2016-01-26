@@ -98,6 +98,10 @@ var largeTenticleGeometry = makeCube();
 var largeTenticleScale = new THREE.Matrix4().set(0.4,0,0,0, 0,0.4,0,0, 0,0,1,0, 0,0,0,1);
 largeTenticleGeometry.applyMatrix(largeTenticleScale);
 
+var smallTenticleGeometry = makeCube();
+var smallTenticleScale = new THREE.Matrix4().set(0.2,0,0,0, 0,0.2,0,0, 0,0,1.5,0, 0,0,0,1);
+smallTenticleGeometry.applyMatrix(smallTenticleScale);
+
 // TO-DO: SPECIFY THE REST OF YOUR STAR-NOSE MOLE'S GEOMETRY. 
 // Note: You will be using transformation matrices to set the shape. 
 // Note: You are not allowed to use the tools Three.js provides for 
@@ -129,9 +133,9 @@ var Claw5Matrix = new THREE.Matrix4().set(1,0,0,-1.4, 0,1,0,0, 0,0,1,3, 0,0,0,1)
 
 //Relative to nose
 var upLeftLargeTentacleMatrix = new THREE.Matrix4().set(1,0,0,0.5, 0,1,0,0.5, 0,0,1,1, 0,0,0,1);
-
-
-
+var lowLeftLargeTentacleMatrix = new THREE.Matrix4().set(1,0,0,0.5, 0,1,0,-0.5, 0,0,1,1, 0,0,0,1);
+var upRightLargeTentacleMatrix = new THREE.Matrix4().set(1,0,0,-0.5, 0,1,0,0.5, 0,0,1,1, 0,0,0,1);
+var lowRightLargeTentacleMatrix = new THREE.Matrix4().set(1,0,0,-0.5, 0,1,0,-0.5, 0,0,1,1, 0,0,0,1);
 
 
 var headMatrixRelativeToTorso =  new THREE.Matrix4().multiplyMatrices(torsoMatrix, headMatrix);
@@ -159,8 +163,22 @@ var rotate20Degrees2 = new THREE.Matrix4().set(  Math.cos(Math.PI/9),       0,  
                                                 -Math.sin(Math.PI/9),       0,          Math.cos(Math.PI/9),        0,
                                                     0,          0,          0,          1);
 
+var rotate20Degrees3 = new THREE.Matrix4().set(  Math.cos(-Math.PI/9),       0,          Math.sin(-Math.PI/9),        0,
+                                                    0,          1,          0,          0,
+                                                    -Math.sin(-Math.PI/9),       0,          Math.cos(-Math.PI/9),        0,
+                                                    0,          0,          0,          1);
+
 var upLeftLargeTentacleRelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, upLeftLargeTentacleMatrix);
 upLeftLargeTentacleRelativeToNose.multiplyMatrices(upLeftLargeTentacleRelativeToNose, rotate20Degrees2);
+
+var lowLeftLargeTentacleRelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, lowLeftLargeTentacleMatrix);
+lowLeftLargeTentacleRelativeToNose.multiplyMatrices(lowLeftLargeTentacleRelativeToNose, rotate20Degrees2);
+
+var upRightLargeTentacleRelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, upRightLargeTentacleMatrix);
+upRightLargeTentacleRelativeToNose.multiplyMatrices(upRightLargeTentacleRelativeToNose, rotate20Degrees3);
+
+var lowRightLargeTentacleRelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, lowRightLargeTentacleMatrix);
+lowRightLargeTentacleRelativeToNose.multiplyMatrices(lowRightLargeTentacleRelativeToNose, rotate20Degrees3);
 
 var frontRightClaw1RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, Claw1Matrix);
 var frontRightClaw2RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, Claw2Matrix);
@@ -310,6 +328,18 @@ var upLeftLargeTentacle = new THREE.Mesh(largeTenticleGeometry,normalMaterial);
 upLeftLargeTentacle.setMatrix(upLeftLargeTentacleRelativeToNose)
 scene.add(upLeftLargeTentacle);
 
+var lowLeftLargeTentacle = new THREE.Mesh(largeTenticleGeometry,normalMaterial);
+lowLeftLargeTentacle.setMatrix(lowLeftLargeTentacleRelativeToNose)
+scene.add(lowLeftLargeTentacle);
+
+var upRightLargeTentacle = new THREE.Mesh(largeTenticleGeometry,normalMaterial);
+upRightLargeTentacle.setMatrix(upRightLargeTentacleRelativeToNose)
+scene.add(upRightLargeTentacle);
+
+var lowRightLargeTentacle = new THREE.Mesh(largeTenticleGeometry,normalMaterial);
+lowRightLargeTentacle.setMatrix(lowRightLargeTentacleRelativeToNose)
+scene.add(lowRightLargeTentacle);
+
 // TO-DO: PUT TOGETHER THE REST OF YOUR STAR-NOSED MOLE AND ADD TO THE SCENE!
 // Hint: Hint: Add one piece of geometry at a time, then implement the motion for that part. 
 //             Then you can make sure your hierarchy still works properly after each step.
@@ -392,6 +422,22 @@ function updateBody() {
           var backLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backLeftPawMatrix);
           backLeftPawRotMatrix.multiplyMatrices(backLeftPawRotMatrix, rotate20Degrees);
           backLeftPaw.setMatrix(backLeftPawRotMatrix);
+
+          var upLeftLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, upLeftLargeTentacleMatrix);
+          upLeftLargeTenticleRotMatrix.multiplyMatrices(upLeftLargeTenticleRotMatrix, rotate20Degrees2);
+          upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
+
+          var lowLeftLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowLeftLargeTentacleMatrix);
+          lowLeftLargeTenticleRotMatrix.multiplyMatrices(lowLeftLargeTenticleRotMatrix, rotate20Degrees2);
+          lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
+
+          var upRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, upRightLargeTentacleMatrix);
+          upRightLargeTenticleRotMatrix.multiplyMatrices(upRightLargeTenticleRotMatrix, rotate20Degrees3);
+          upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
+
+          var lowRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowRightLargeTentacleMatrix);
+          lowRightLargeTenticleRotMatrix.multiplyMatrices(lowRightLargeTenticleRotMatrix, rotate20Degrees3);
+          lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
 
           var frontRightPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw1Matrix);
           frontRightClaw1.setMatrix(frontRightPawClaw1RotMatrix);
@@ -499,6 +545,22 @@ function updateBody() {
           var backLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backLeftPawMatrix);
           backLeftPawRotMatrix.multiplyMatrices(backLeftPawRotMatrix, rotate20Degrees);
           backLeftPaw.setMatrix(backLeftPawRotMatrix);
+
+          var upLeftLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, upLeftLargeTentacleMatrix);
+          upLeftLargeTenticleRotMatrix.multiplyMatrices(upLeftLargeTenticleRotMatrix, rotate20Degrees2);
+          upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
+
+          var lowLeftLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowLeftLargeTentacleMatrix);
+          lowLeftLargeTenticleRotMatrix.multiplyMatrices(lowLeftLargeTenticleRotMatrix, rotate20Degrees2);
+          lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
+
+          var upRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, upRightLargeTentacleMatrix);
+          upRightLargeTenticleRotMatrix.multiplyMatrices(upRightLargeTenticleRotMatrix, rotate20Degrees3);
+          upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
+
+          var lowRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowRightLargeTentacleMatrix);
+          lowRightLargeTenticleRotMatrix.multiplyMatrices(lowRightLargeTenticleRotMatrix, rotate20Degrees3);
+          lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
 
           var frontPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw1Matrix);
           frontRightClaw1.setMatrix(frontPawClaw1RotMatrix);
