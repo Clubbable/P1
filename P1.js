@@ -137,6 +137,26 @@ var lowLeftLargeTentacleMatrix = new THREE.Matrix4().set(1,0,0,0.5, 0,1,0,-0.5, 
 var upRightLargeTentacleMatrix = new THREE.Matrix4().set(1,0,0,-0.5, 0,1,0,0.5, 0,0,1,1, 0,0,0,1);
 var lowRightLargeTentacleMatrix = new THREE.Matrix4().set(1,0,0,-0.5, 0,1,0,-0.5, 0,0,1,1, 0,0,0,1);
 
+var LeftSmallTentacle1Matrix =  new THREE.Matrix4().set(1,0,0,1.0, 0,1,0,1.0, 0,0,1,1.2, 0,0,0,1);
+var LeftSmallTentacle2Matrix =  new THREE.Matrix4().set(1,0,0,1.0, 0,1,0,1.0 - 2.0/8, 0,0,1,1.2, 0,0,0,1);
+var LeftSmallTentacle3Matrix =  new THREE.Matrix4().set(1,0,0,1.0, 0,1,0,1.0 - 4.0/8, 0,0,1,1.2, 0,0,0,1);
+var LeftSmallTentacle4Matrix =  new THREE.Matrix4().set(1,0,0,1.0, 0,1,0,1.0 - 6.0/8, 0,0,1,1.2, 0,0,0,1);
+var LeftSmallTentacle5Matrix =  new THREE.Matrix4().set(1,0,0,1.0, 0,1,0,1.0 - 8.0/8, 0,0,1,1.2, 0,0,0,1);
+var LeftSmallTentacle6Matrix =  new THREE.Matrix4().set(1,0,0,1.0, 0,1,0,1.0 - 10.0/8, 0,0,1,1.2, 0,0,0,1);
+var LeftSmallTentacle7Matrix =  new THREE.Matrix4().set(1,0,0,1.0, 0,1,0,1.0 - 12.0/8, 0,0,1,1.2, 0,0,0,1);
+var LeftSmallTentacle8Matrix =  new THREE.Matrix4().set(1,0,0,1.0, 0,1,0,1.0 - 14.0/8, 0,0,1,1.2, 0,0,0,1);
+var LeftSmallTentacle9Matrix =  new THREE.Matrix4().set(1,0,0,1.0, 0,1,0,1.0 - 16.0/8, 0,0,1,1.2, 0,0,0,1);
+
+var RightSmallTentacle1Matrix =  new THREE.Matrix4().set(1,0,0,-1.0, 0,1,0,1.0, 0,0,1,1.2, 0,0,0,1);
+var RightSmallTentacle2Matrix =  new THREE.Matrix4().set(1,0,0,-1.0, 0,1,0,1.0 - 2.0/8, 0,0,1,1.2, 0,0,0,1);
+var RightSmallTentacle3Matrix =  new THREE.Matrix4().set(1,0,0,-1.0, 0,1,0,1.0 - 4.0/8, 0,0,1,1.2, 0,0,0,1);
+var RightSmallTentacle4Matrix =  new THREE.Matrix4().set(1,0,0,-1.0, 0,1,0,1.0 - 6.0/8, 0,0,1,1.2, 0,0,0,1);
+var RightSmallTentacle5Matrix =  new THREE.Matrix4().set(1,0,0,-1.0, 0,1,0,1.0 - 8.0/8, 0,0,1,1.2, 0,0,0,1);
+var RightSmallTentacle6Matrix =  new THREE.Matrix4().set(1,0,0,-1.0, 0,1,0,1.0 - 10.0/8, 0,0,1,1.2, 0,0,0,1);
+var RightSmallTentacle7Matrix =  new THREE.Matrix4().set(1,0,0,-1.0, 0,1,0,1.0 - 12.0/8, 0,0,1,1.2, 0,0,0,1);
+var RightSmallTentacle8Matrix =  new THREE.Matrix4().set(1,0,0,-1.0, 0,1,0,1.0 - 14.0/8, 0,0,1,1.2, 0,0,0,1);
+var RightSmallTentacle9Matrix =  new THREE.Matrix4().set(1,0,0,-1.0, 0,1,0,1.0 - 16.0/8, 0,0,1,1.2, 0,0,0,1);
+
 
 var headMatrixRelativeToTorso =  new THREE.Matrix4().multiplyMatrices(torsoMatrix, headMatrix);
 var noseMatrixRelativeToTorso =  new THREE.Matrix4().multiplyMatrices(torsoMatrix, noseMatrix);
@@ -147,6 +167,51 @@ var rotate20Degrees = new THREE.Matrix4().set(  1,        0,         0,        0
                                         0, Math.cos(Math.PI/9),-Math.sin(Math.PI/9), 0,
                                         0, Math.sin(Math.PI/9), Math.cos(Math.PI/9), 0,
                                         0,        0,         0,        1);
+
+var rotate20Degrees4 = new THREE.Matrix4().set(  1,        0,         0,        0,
+                                                0, Math.cos(-Math.PI/9),-Math.sin(-Math.PI/9), 0,
+                                                0, Math.sin(-Math.PI/9), Math.cos(-Math.PI/9), 0,
+                                                0,        0,         0,        1);
+
+var rotate20Degrees5 = new THREE.Matrix4().set(  1,        0,         0,        0,
+    0, Math.cos(-Math.PI/9 + 2*(Math.PI/9)/8),-Math.sin(-Math.PI/9 + 2*(Math.PI/9)/8), 0,
+    0, Math.sin(-Math.PI/9 + 2*(Math.PI/9)/8), Math.cos(-Math.PI/9 + 2*(Math.PI/9)/8), 0,
+    0,        0,         0,        1);
+
+var rotate20Degrees6 = new THREE.Matrix4().set(  1,        0,         0,        0,
+    0, Math.cos(-Math.PI/9 + 4*(Math.PI/9)/8),-Math.sin(-Math.PI/9 + 4*(Math.PI/9)/8), 0,
+    0, Math.sin(-Math.PI/9 + 4*(Math.PI/9)/8), Math.cos(-Math.PI/9 + 4*(Math.PI/9)/8), 0,
+    0,        0,         0,        1);
+
+var rotate20Degrees7 = new THREE.Matrix4().set(  1,        0,         0,        0,
+    0, Math.cos(-Math.PI/9 + 6*(Math.PI/9)/8),-Math.sin(-Math.PI/9 + 6*(Math.PI/9)/8), 0,
+    0, Math.sin(-Math.PI/9 + 6*(Math.PI/9)/8), Math.cos(-Math.PI/9 + 6*(Math.PI/9)/8), 0,
+    0,        0,         0,        1);
+
+var rotate20Degrees8 = new THREE.Matrix4().set(  1,        0,         0,        0,
+    0, Math.cos(-Math.PI/9 + 8*(Math.PI/9)/8),-Math.sin(-Math.PI/9 + 8*(Math.PI/9)/8), 0,
+    0, Math.sin(-Math.PI/9 + 8*(Math.PI/9)/8), Math.cos(-Math.PI/9 + 8*(Math.PI/9)/8), 0,
+    0,        0,         0,        1);
+
+var rotate20Degrees9 = new THREE.Matrix4().set(  1,        0,         0,        0,
+    0, Math.cos(-Math.PI/9 + 10*(Math.PI/9)/8),-Math.sin(-Math.PI/9 + 10*(Math.PI/9)/8), 0,
+    0, Math.sin(-Math.PI/9 + 10*(Math.PI/9)/8), Math.cos(-Math.PI/9 + 10*(Math.PI/9)/8), 0,
+    0,        0,         0,        1);
+
+var rotate20Degrees10 = new THREE.Matrix4().set(  1,        0,         0,        0,
+    0, Math.cos(-Math.PI/9 + 12*(Math.PI/9)/8),-Math.sin(-Math.PI/9 + 12*(Math.PI/9)/8), 0,
+    0, Math.sin(-Math.PI/9 + 12*(Math.PI/9)/8), Math.cos(-Math.PI/9 + 12*(Math.PI/9)/8), 0,
+    0,        0,         0,        1);
+
+var rotate20Degrees11 = new THREE.Matrix4().set(  1,        0,         0,        0,
+    0, Math.cos(-Math.PI/9 + 14*(Math.PI/9)/8),-Math.sin(-Math.PI/9 + 14*(Math.PI/9)/8), 0,
+    0, Math.sin(-Math.PI/9 + 14*(Math.PI/9)/8), Math.cos(-Math.PI/9 + 14*(Math.PI/9)/8), 0,
+    0,        0,         0,        1);
+
+var rotate20Degrees12 = new THREE.Matrix4().set(  1,        0,         0,        0,
+    0, Math.cos(Math.PI/9),-Math.sin(Math.PI/9), 0,
+    0, Math.sin(Math.PI/9), Math.cos(Math.PI/9), 0,
+    0,        0,         0,        1);
 
 var frontRightPawMatrixRelativeToTorso = new THREE.Matrix4().multiplyMatrices(torsoMatrix, frontRightPawMatrix);
 frontRightPawMatrixRelativeToTorso.multiplyMatrices(frontRightPawMatrixRelativeToTorso, rotate20Degrees);
@@ -179,6 +244,78 @@ upRightLargeTentacleRelativeToNose.multiplyMatrices(upRightLargeTentacleRelative
 
 var lowRightLargeTentacleRelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, lowRightLargeTentacleMatrix);
 lowRightLargeTentacleRelativeToNose.multiplyMatrices(lowRightLargeTentacleRelativeToNose, rotate20Degrees3);
+
+var leftSmallTentacle1RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, LeftSmallTentacle1Matrix);
+leftSmallTentacle1RelativeToNose.multiplyMatrices(leftSmallTentacle1RelativeToNose, rotate20Degrees2);
+leftSmallTentacle1RelativeToNose.multiplyMatrices(leftSmallTentacle1RelativeToNose, rotate20Degrees4);
+
+var leftSmallTentacle2RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, LeftSmallTentacle2Matrix);
+leftSmallTentacle2RelativeToNose.multiplyMatrices(leftSmallTentacle2RelativeToNose, rotate20Degrees2);
+leftSmallTentacle2RelativeToNose.multiplyMatrices(leftSmallTentacle2RelativeToNose, rotate20Degrees5);
+
+var leftSmallTentacle3RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, LeftSmallTentacle3Matrix);
+leftSmallTentacle3RelativeToNose.multiplyMatrices(leftSmallTentacle3RelativeToNose, rotate20Degrees2);
+leftSmallTentacle3RelativeToNose.multiplyMatrices(leftSmallTentacle3RelativeToNose, rotate20Degrees6);
+
+var leftSmallTentacle4RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, LeftSmallTentacle4Matrix);
+leftSmallTentacle4RelativeToNose.multiplyMatrices(leftSmallTentacle4RelativeToNose, rotate20Degrees2);
+leftSmallTentacle4RelativeToNose.multiplyMatrices(leftSmallTentacle4RelativeToNose, rotate20Degrees7);
+
+var leftSmallTentacle5RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, LeftSmallTentacle5Matrix);
+leftSmallTentacle5RelativeToNose.multiplyMatrices(leftSmallTentacle5RelativeToNose, rotate20Degrees2);
+leftSmallTentacle5RelativeToNose.multiplyMatrices(leftSmallTentacle5RelativeToNose, rotate20Degrees8);
+
+var leftSmallTentacle6RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, LeftSmallTentacle6Matrix);
+leftSmallTentacle6RelativeToNose.multiplyMatrices(leftSmallTentacle6RelativeToNose, rotate20Degrees2);
+leftSmallTentacle6RelativeToNose.multiplyMatrices(leftSmallTentacle6RelativeToNose, rotate20Degrees9);
+
+var leftSmallTentacle7RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, LeftSmallTentacle7Matrix);
+leftSmallTentacle7RelativeToNose.multiplyMatrices(leftSmallTentacle7RelativeToNose, rotate20Degrees2);
+leftSmallTentacle7RelativeToNose.multiplyMatrices(leftSmallTentacle7RelativeToNose, rotate20Degrees10);
+
+var leftSmallTentacle8RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, LeftSmallTentacle8Matrix);
+leftSmallTentacle8RelativeToNose.multiplyMatrices(leftSmallTentacle8RelativeToNose, rotate20Degrees2);
+leftSmallTentacle8RelativeToNose.multiplyMatrices(leftSmallTentacle8RelativeToNose, rotate20Degrees11);
+
+var leftSmallTentacle9RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, LeftSmallTentacle9Matrix);
+leftSmallTentacle9RelativeToNose.multiplyMatrices(leftSmallTentacle9RelativeToNose, rotate20Degrees2);
+leftSmallTentacle9RelativeToNose.multiplyMatrices(leftSmallTentacle9RelativeToNose, rotate20Degrees12);
+
+var RightSmallTentacle1RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, RightSmallTentacle1Matrix);
+RightSmallTentacle1RelativeToNose.multiplyMatrices(RightSmallTentacle1RelativeToNose, rotate20Degrees3);
+RightSmallTentacle1RelativeToNose.multiplyMatrices(RightSmallTentacle1RelativeToNose, rotate20Degrees4);
+
+var RightSmallTentacle2RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, RightSmallTentacle2Matrix);
+RightSmallTentacle2RelativeToNose.multiplyMatrices(RightSmallTentacle2RelativeToNose, rotate20Degrees3);
+RightSmallTentacle2RelativeToNose.multiplyMatrices(RightSmallTentacle2RelativeToNose, rotate20Degrees5);
+
+var RightSmallTentacle3RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, RightSmallTentacle3Matrix);
+RightSmallTentacle3RelativeToNose.multiplyMatrices(RightSmallTentacle3RelativeToNose, rotate20Degrees3);
+RightSmallTentacle3RelativeToNose.multiplyMatrices(RightSmallTentacle3RelativeToNose, rotate20Degrees6);
+
+var RightSmallTentacle4RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, RightSmallTentacle4Matrix);
+RightSmallTentacle4RelativeToNose.multiplyMatrices(RightSmallTentacle4RelativeToNose, rotate20Degrees3);
+RightSmallTentacle4RelativeToNose.multiplyMatrices(RightSmallTentacle4RelativeToNose, rotate20Degrees7);
+
+var RightSmallTentacle5RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, RightSmallTentacle5Matrix);
+RightSmallTentacle5RelativeToNose.multiplyMatrices(RightSmallTentacle5RelativeToNose, rotate20Degrees3);
+RightSmallTentacle5RelativeToNose.multiplyMatrices(RightSmallTentacle5RelativeToNose, rotate20Degrees8);
+
+var RightSmallTentacle6RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, RightSmallTentacle6Matrix);
+RightSmallTentacle6RelativeToNose.multiplyMatrices(RightSmallTentacle6RelativeToNose, rotate20Degrees3);
+RightSmallTentacle6RelativeToNose.multiplyMatrices(RightSmallTentacle6RelativeToNose, rotate20Degrees9);
+
+var RightSmallTentacle7RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, RightSmallTentacle7Matrix);
+RightSmallTentacle7RelativeToNose.multiplyMatrices(RightSmallTentacle7RelativeToNose, rotate20Degrees3);
+RightSmallTentacle7RelativeToNose.multiplyMatrices(RightSmallTentacle7RelativeToNose, rotate20Degrees10);
+
+var RightSmallTentacle8RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, RightSmallTentacle8Matrix);
+RightSmallTentacle8RelativeToNose.multiplyMatrices(RightSmallTentacle8RelativeToNose, rotate20Degrees3);
+RightSmallTentacle8RelativeToNose.multiplyMatrices(RightSmallTentacle8RelativeToNose, rotate20Degrees11);
+
+var RightSmallTentacle9RelativeToNose = new THREE.Matrix4().multiplyMatrices(noseMatrixRelativeToTorso, RightSmallTentacle9Matrix);
+RightSmallTentacle9RelativeToNose.multiplyMatrices(RightSmallTentacle9RelativeToNose, rotate20Degrees3);
+RightSmallTentacle9RelativeToNose.multiplyMatrices(RightSmallTentacle9RelativeToNose, rotate20Degrees12);
 
 var frontRightClaw1RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, Claw1Matrix);
 var frontRightClaw2RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, Claw2Matrix);
@@ -340,6 +477,78 @@ var lowRightLargeTentacle = new THREE.Mesh(largeTenticleGeometry,normalMaterial)
 lowRightLargeTentacle.setMatrix(lowRightLargeTentacleRelativeToNose)
 scene.add(lowRightLargeTentacle);
 
+var leftSmallTentacle1 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+leftSmallTentacle1.setMatrix(leftSmallTentacle1RelativeToNose)
+scene.add(leftSmallTentacle1);
+
+var leftSmallTentacle2 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+leftSmallTentacle2.setMatrix(leftSmallTentacle2RelativeToNose)
+scene.add(leftSmallTentacle2);
+
+var leftSmallTentacle3 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+leftSmallTentacle3.setMatrix(leftSmallTentacle3RelativeToNose)
+scene.add(leftSmallTentacle3);
+
+var leftSmallTentacle4 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+leftSmallTentacle4.setMatrix(leftSmallTentacle4RelativeToNose)
+scene.add(leftSmallTentacle4);
+
+var leftSmallTentacle5 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+leftSmallTentacle5.setMatrix(leftSmallTentacle5RelativeToNose)
+scene.add(leftSmallTentacle5);
+
+var leftSmallTentacle6 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+leftSmallTentacle6.setMatrix(leftSmallTentacle6RelativeToNose)
+scene.add(leftSmallTentacle6);
+
+var leftSmallTentacle7 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+leftSmallTentacle7.setMatrix(leftSmallTentacle7RelativeToNose)
+scene.add(leftSmallTentacle7);
+
+var leftSmallTentacle8 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+leftSmallTentacle8.setMatrix(leftSmallTentacle8RelativeToNose)
+scene.add(leftSmallTentacle8);
+
+var leftSmallTentacle9 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+leftSmallTentacle9.setMatrix(leftSmallTentacle9RelativeToNose)
+scene.add(leftSmallTentacle9);
+
+var rightSmallTentacle1 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+rightSmallTentacle1.setMatrix(RightSmallTentacle1RelativeToNose)
+scene.add(rightSmallTentacle1);
+
+var rightSmallTentacle2 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+rightSmallTentacle2.setMatrix(RightSmallTentacle2RelativeToNose)
+scene.add(rightSmallTentacle2);
+
+var rightSmallTentacle3 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+rightSmallTentacle3.setMatrix(RightSmallTentacle3RelativeToNose)
+scene.add(rightSmallTentacle3);
+
+var rightSmallTentacle4 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+rightSmallTentacle4.setMatrix(RightSmallTentacle4RelativeToNose)
+scene.add(rightSmallTentacle4);
+
+var rightSmallTentacle5 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+rightSmallTentacle5.setMatrix(RightSmallTentacle5RelativeToNose)
+scene.add(rightSmallTentacle5);
+
+var rightSmallTentacle6 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+rightSmallTentacle6.setMatrix(RightSmallTentacle6RelativeToNose)
+scene.add(rightSmallTentacle6);
+
+var rightSmallTentacle7 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+rightSmallTentacle7.setMatrix(RightSmallTentacle7RelativeToNose)
+scene.add(rightSmallTentacle7);
+
+var rightSmallTentacle8 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+rightSmallTentacle8.setMatrix(RightSmallTentacle8RelativeToNose)
+scene.add(rightSmallTentacle8);
+
+var rightSmallTentacle9 = new THREE.Mesh(smallTenticleGeometry,normalMaterial);
+rightSmallTentacle9.setMatrix(RightSmallTentacle9RelativeToNose)
+scene.add(rightSmallTentacle9);
+
 // TO-DO: PUT TOGETHER THE REST OF YOUR STAR-NOSED MOLE AND ADD TO THE SCENE!
 // Hint: Hint: Add one piece of geometry at a time, then implement the motion for that part. 
 //             Then you can make sure your hierarchy still works properly after each step.
@@ -438,6 +647,96 @@ function updateBody() {
           var lowRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowRightLargeTentacleMatrix);
           lowRightLargeTenticleRotMatrix.multiplyMatrices(lowRightLargeTenticleRotMatrix, rotate20Degrees3);
           lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
+
+          var leftSmallTenticle1RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle1Matrix);
+          leftSmallTenticle1RotMatrix.multiplyMatrices(leftSmallTenticle1RotMatrix, rotate20Degrees2);
+          leftSmallTenticle1RotMatrix.multiplyMatrices(leftSmallTenticle1RotMatrix, rotate20Degrees4);
+          leftSmallTentacle1.setMatrix(leftSmallTenticle1RotMatrix);
+
+          var leftSmallTenticle2RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle2Matrix);
+          leftSmallTenticle2RotMatrix.multiplyMatrices(leftSmallTenticle2RotMatrix, rotate20Degrees2);
+          leftSmallTenticle2RotMatrix.multiplyMatrices(leftSmallTenticle2RotMatrix, rotate20Degrees5);
+          leftSmallTentacle2.setMatrix(leftSmallTenticle2RotMatrix);
+
+          var leftSmallTenticle3RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle3Matrix);
+          leftSmallTenticle3RotMatrix.multiplyMatrices(leftSmallTenticle3RotMatrix, rotate20Degrees2);
+          leftSmallTenticle3RotMatrix.multiplyMatrices(leftSmallTenticle3RotMatrix, rotate20Degrees6);
+          leftSmallTentacle3.setMatrix(leftSmallTenticle3RotMatrix);
+
+          var leftSmallTenticle4RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle4Matrix);
+          leftSmallTenticle4RotMatrix.multiplyMatrices(leftSmallTenticle4RotMatrix, rotate20Degrees2);
+          leftSmallTenticle4RotMatrix.multiplyMatrices(leftSmallTenticle4RotMatrix, rotate20Degrees7);
+          leftSmallTentacle4.setMatrix(leftSmallTenticle4RotMatrix);
+
+          var leftSmallTenticle5RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle5Matrix);
+          leftSmallTenticle5RotMatrix.multiplyMatrices(leftSmallTenticle5RotMatrix, rotate20Degrees2);
+          leftSmallTenticle5RotMatrix.multiplyMatrices(leftSmallTenticle5RotMatrix, rotate20Degrees8);
+          leftSmallTentacle5.setMatrix(leftSmallTenticle5RotMatrix);
+
+          var leftSmallTenticle6RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle6Matrix);
+          leftSmallTenticle6RotMatrix.multiplyMatrices(leftSmallTenticle6RotMatrix, rotate20Degrees2);
+          leftSmallTenticle6RotMatrix.multiplyMatrices(leftSmallTenticle6RotMatrix, rotate20Degrees9);
+          leftSmallTentacle6.setMatrix(leftSmallTenticle6RotMatrix);
+
+          var leftSmallTenticle7RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle7Matrix);
+          leftSmallTenticle7RotMatrix.multiplyMatrices(leftSmallTenticle7RotMatrix, rotate20Degrees2);
+          leftSmallTenticle7RotMatrix.multiplyMatrices(leftSmallTenticle7RotMatrix, rotate20Degrees10);
+          leftSmallTentacle7.setMatrix(leftSmallTenticle7RotMatrix);
+
+          var leftSmallTenticle8RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle8Matrix);
+          leftSmallTenticle8RotMatrix.multiplyMatrices(leftSmallTenticle8RotMatrix, rotate20Degrees2);
+          leftSmallTenticle8RotMatrix.multiplyMatrices(leftSmallTenticle8RotMatrix, rotate20Degrees11);
+          leftSmallTentacle8.setMatrix(leftSmallTenticle8RotMatrix);
+
+          var leftSmallTenticle9RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle9Matrix);
+          leftSmallTenticle9RotMatrix.multiplyMatrices(leftSmallTenticle9RotMatrix, rotate20Degrees2);
+          leftSmallTenticle9RotMatrix.multiplyMatrices(leftSmallTenticle9RotMatrix, rotate20Degrees12);
+          leftSmallTentacle9.setMatrix(leftSmallTenticle9RotMatrix);
+
+          var rightSmallTenticle1RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle1Matrix);
+          rightSmallTenticle1RotMatrix.multiplyMatrices(rightSmallTenticle1RotMatrix, rotate20Degrees3);
+          rightSmallTenticle1RotMatrix.multiplyMatrices(rightSmallTenticle1RotMatrix, rotate20Degrees4);
+          rightSmallTentacle1.setMatrix(rightSmallTenticle1RotMatrix);
+
+          var rightSmallTenticle2RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle2Matrix);
+          rightSmallTenticle2RotMatrix.multiplyMatrices(rightSmallTenticle2RotMatrix, rotate20Degrees3);
+          rightSmallTenticle2RotMatrix.multiplyMatrices(rightSmallTenticle2RotMatrix, rotate20Degrees5);
+          rightSmallTentacle2.setMatrix(rightSmallTenticle2RotMatrix);
+
+          var rightSmallTenticle3RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle3Matrix);
+          rightSmallTenticle3RotMatrix.multiplyMatrices(rightSmallTenticle3RotMatrix, rotate20Degrees3);
+          rightSmallTenticle3RotMatrix.multiplyMatrices(rightSmallTenticle3RotMatrix, rotate20Degrees6);
+          rightSmallTentacle3.setMatrix(rightSmallTenticle3RotMatrix);
+
+          var rightSmallTenticle4RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle4Matrix);
+          rightSmallTenticle4RotMatrix.multiplyMatrices(rightSmallTenticle4RotMatrix, rotate20Degrees3);
+          rightSmallTenticle4RotMatrix.multiplyMatrices(rightSmallTenticle4RotMatrix, rotate20Degrees7);
+          rightSmallTentacle4.setMatrix(rightSmallTenticle4RotMatrix);
+
+          var rightSmallTenticle5RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle5Matrix);
+          rightSmallTenticle5RotMatrix.multiplyMatrices(rightSmallTenticle5RotMatrix, rotate20Degrees3);
+          rightSmallTenticle5RotMatrix.multiplyMatrices(rightSmallTenticle5RotMatrix, rotate20Degrees8);
+          rightSmallTentacle5.setMatrix(rightSmallTenticle5RotMatrix);
+
+          var rightSmallTenticle6RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle6Matrix);
+          rightSmallTenticle6RotMatrix.multiplyMatrices(rightSmallTenticle6RotMatrix, rotate20Degrees3);
+          rightSmallTenticle6RotMatrix.multiplyMatrices(rightSmallTenticle6RotMatrix, rotate20Degrees9);
+          rightSmallTentacle6.setMatrix(rightSmallTenticle6RotMatrix);
+
+          var rightSmallTenticle7RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle7Matrix);
+          rightSmallTenticle7RotMatrix.multiplyMatrices(rightSmallTenticle7RotMatrix, rotate20Degrees3);
+          rightSmallTenticle7RotMatrix.multiplyMatrices(rightSmallTenticle7RotMatrix, rotate20Degrees10);
+          rightSmallTentacle7.setMatrix(rightSmallTenticle7RotMatrix);
+
+          var rightSmallTenticle8RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle8Matrix);
+          rightSmallTenticle8RotMatrix.multiplyMatrices(rightSmallTenticle8RotMatrix, rotate20Degrees3);
+          rightSmallTenticle8RotMatrix.multiplyMatrices(rightSmallTenticle8RotMatrix, rotate20Degrees11);
+          rightSmallTentacle8.setMatrix(rightSmallTenticle8RotMatrix);
+
+          var rightSmallTenticle9RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle9Matrix);
+          rightSmallTenticle9RotMatrix.multiplyMatrices(rightSmallTenticle9RotMatrix, rotate20Degrees3);
+          rightSmallTenticle9RotMatrix.multiplyMatrices(rightSmallTenticle9RotMatrix, rotate20Degrees12);
+          rightSmallTentacle9.setMatrix(rightSmallTenticle9RotMatrix);
 
           var frontRightPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw1Matrix);
           frontRightClaw1.setMatrix(frontRightPawClaw1RotMatrix);
@@ -561,6 +860,96 @@ function updateBody() {
           var lowRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowRightLargeTentacleMatrix);
           lowRightLargeTenticleRotMatrix.multiplyMatrices(lowRightLargeTenticleRotMatrix, rotate20Degrees3);
           lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
+
+          var leftSmallTenticle1RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle1Matrix);
+          leftSmallTenticle1RotMatrix.multiplyMatrices(leftSmallTenticle1RotMatrix, rotate20Degrees2);
+          leftSmallTenticle1RotMatrix.multiplyMatrices(leftSmallTenticle1RotMatrix, rotate20Degrees4);
+          leftSmallTentacle1.setMatrix(leftSmallTenticle1RotMatrix);
+
+          var leftSmallTenticle2RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle2Matrix);
+          leftSmallTenticle2RotMatrix.multiplyMatrices(leftSmallTenticle2RotMatrix, rotate20Degrees2);
+          leftSmallTenticle2RotMatrix.multiplyMatrices(leftSmallTenticle2RotMatrix, rotate20Degrees5);
+          leftSmallTentacle2.setMatrix(leftSmallTenticle2RotMatrix);
+
+          var leftSmallTenticle3RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle3Matrix);
+          leftSmallTenticle3RotMatrix.multiplyMatrices(leftSmallTenticle3RotMatrix, rotate20Degrees2);
+          leftSmallTenticle3RotMatrix.multiplyMatrices(leftSmallTenticle3RotMatrix, rotate20Degrees6);
+          leftSmallTentacle3.setMatrix(leftSmallTenticle3RotMatrix);
+
+          var leftSmallTenticle4RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle4Matrix);
+          leftSmallTenticle4RotMatrix.multiplyMatrices(leftSmallTenticle4RotMatrix, rotate20Degrees2);
+          leftSmallTenticle4RotMatrix.multiplyMatrices(leftSmallTenticle4RotMatrix, rotate20Degrees7);
+          leftSmallTentacle4.setMatrix(leftSmallTenticle4RotMatrix);
+
+          var leftSmallTenticle5RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle5Matrix);
+          leftSmallTenticle5RotMatrix.multiplyMatrices(leftSmallTenticle5RotMatrix, rotate20Degrees2);
+          leftSmallTenticle5RotMatrix.multiplyMatrices(leftSmallTenticle5RotMatrix, rotate20Degrees8);
+          leftSmallTentacle5.setMatrix(leftSmallTenticle5RotMatrix);
+
+          var leftSmallTenticle6RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle6Matrix);
+          leftSmallTenticle6RotMatrix.multiplyMatrices(leftSmallTenticle6RotMatrix, rotate20Degrees2);
+          leftSmallTenticle6RotMatrix.multiplyMatrices(leftSmallTenticle6RotMatrix, rotate20Degrees9);
+          leftSmallTentacle6.setMatrix(leftSmallTenticle6RotMatrix);
+
+          var leftSmallTenticle7RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle7Matrix);
+          leftSmallTenticle7RotMatrix.multiplyMatrices(leftSmallTenticle7RotMatrix, rotate20Degrees2);
+          leftSmallTenticle7RotMatrix.multiplyMatrices(leftSmallTenticle7RotMatrix, rotate20Degrees10);
+          leftSmallTentacle7.setMatrix(leftSmallTenticle7RotMatrix);
+
+          var leftSmallTenticle8RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle8Matrix);
+          leftSmallTenticle8RotMatrix.multiplyMatrices(leftSmallTenticle8RotMatrix, rotate20Degrees2);
+          leftSmallTenticle8RotMatrix.multiplyMatrices(leftSmallTenticle8RotMatrix, rotate20Degrees11);
+          leftSmallTentacle8.setMatrix(leftSmallTenticle8RotMatrix);
+
+          var leftSmallTenticle9RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacle9Matrix);
+          leftSmallTenticle9RotMatrix.multiplyMatrices(leftSmallTenticle9RotMatrix, rotate20Degrees2);
+          leftSmallTenticle9RotMatrix.multiplyMatrices(leftSmallTenticle9RotMatrix, rotate20Degrees12);
+          leftSmallTentacle9.setMatrix(leftSmallTenticle9RotMatrix);
+
+          var rightSmallTenticle1RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle1Matrix);
+          rightSmallTenticle1RotMatrix.multiplyMatrices(rightSmallTenticle1RotMatrix, rotate20Degrees3);
+          rightSmallTenticle1RotMatrix.multiplyMatrices(rightSmallTenticle1RotMatrix, rotate20Degrees4);
+          rightSmallTentacle1.setMatrix(rightSmallTenticle1RotMatrix);
+
+          var rightSmallTenticle2RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle2Matrix);
+          rightSmallTenticle2RotMatrix.multiplyMatrices(rightSmallTenticle2RotMatrix, rotate20Degrees3);
+          rightSmallTenticle2RotMatrix.multiplyMatrices(rightSmallTenticle2RotMatrix, rotate20Degrees5);
+          rightSmallTentacle2.setMatrix(rightSmallTenticle2RotMatrix);
+
+          var rightSmallTenticle3RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle3Matrix);
+          rightSmallTenticle3RotMatrix.multiplyMatrices(rightSmallTenticle3RotMatrix, rotate20Degrees3);
+          rightSmallTenticle3RotMatrix.multiplyMatrices(rightSmallTenticle3RotMatrix, rotate20Degrees6);
+          rightSmallTentacle3.setMatrix(rightSmallTenticle3RotMatrix);
+
+          var rightSmallTenticle4RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle4Matrix);
+          rightSmallTenticle4RotMatrix.multiplyMatrices(rightSmallTenticle4RotMatrix, rotate20Degrees3);
+          rightSmallTenticle4RotMatrix.multiplyMatrices(rightSmallTenticle4RotMatrix, rotate20Degrees7);
+          rightSmallTentacle4.setMatrix(rightSmallTenticle4RotMatrix);
+
+          var rightSmallTenticle5RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle5Matrix);
+          rightSmallTenticle5RotMatrix.multiplyMatrices(rightSmallTenticle5RotMatrix, rotate20Degrees3);
+          rightSmallTenticle5RotMatrix.multiplyMatrices(rightSmallTenticle5RotMatrix, rotate20Degrees8);
+          rightSmallTentacle5.setMatrix(rightSmallTenticle5RotMatrix);
+
+          var rightSmallTenticle6RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle6Matrix);
+          rightSmallTenticle6RotMatrix.multiplyMatrices(rightSmallTenticle6RotMatrix, rotate20Degrees3);
+          rightSmallTenticle6RotMatrix.multiplyMatrices(rightSmallTenticle6RotMatrix, rotate20Degrees9);
+          rightSmallTentacle6.setMatrix(rightSmallTenticle6RotMatrix);
+
+          var rightSmallTenticle7RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle7Matrix);
+          rightSmallTenticle7RotMatrix.multiplyMatrices(rightSmallTenticle7RotMatrix, rotate20Degrees3);
+          rightSmallTenticle7RotMatrix.multiplyMatrices(rightSmallTenticle7RotMatrix, rotate20Degrees10);
+          rightSmallTentacle7.setMatrix(rightSmallTenticle7RotMatrix);
+
+          var rightSmallTenticle8RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle8Matrix);
+          rightSmallTenticle8RotMatrix.multiplyMatrices(rightSmallTenticle8RotMatrix, rotate20Degrees3);
+          rightSmallTenticle8RotMatrix.multiplyMatrices(rightSmallTenticle8RotMatrix, rotate20Degrees11);
+          rightSmallTentacle8.setMatrix(rightSmallTenticle8RotMatrix);
+
+          var rightSmallTenticle9RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacle9Matrix);
+          rightSmallTenticle9RotMatrix.multiplyMatrices(rightSmallTenticle9RotMatrix, rotate20Degrees3);
+          rightSmallTenticle9RotMatrix.multiplyMatrices(rightSmallTenticle9RotMatrix, rotate20Degrees12);
+          rightSmallTentacle9.setMatrix(rightSmallTenticle9RotMatrix);
 
           var frontPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw1Matrix);
           frontRightClaw1.setMatrix(frontPawClaw1RotMatrix);
