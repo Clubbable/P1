@@ -93,11 +93,11 @@ var backRightPawMatrix = new THREE.Matrix4().set(1,0,0,-2.5, 0,1,0,-3.5, 0,0,1,-
 var backLeftPawMatrix = new THREE.Matrix4().set(1,0,0,2.5, 0,1,0,-3.5, 0,0,1,-2, 0,0,0,1);
 
 //Relative to respective paws
-var Claw1Matrix = new THREE.Matrix4().set(1,0,0,1.4, 0,1,0,0, 0,0,1,3, 0,0,0,1);
-var Claw2Matrix = new THREE.Matrix4().set(1,0,0,0.7, 0,1,0,0, 0,0,1,3, 0,0,0,1);
-var Claw3Matrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,3, 0,0,0,1);
-var Claw4Matrix = new THREE.Matrix4().set(1,0,0,-0.7, 0,1,0,0, 0,0,1,3, 0,0,0,1);
-var Claw5Matrix = new THREE.Matrix4().set(1,0,0,-1.4, 0,1,0,0, 0,0,1,3, 0,0,0,1);
+var ClawMatrices = [];
+for(var index = 1; index < 6; index++)
+{
+    ClawMatrices[index] = new THREE.Matrix4().set(1,0,0,1.4-[index-1]*0.7, 0,1,0,0, 0,0,1,3, 0,0,0,1);
+}
 
 //Relative to nose
 var upLeftLargeTentacleMatrix = new THREE.Matrix4().set(1,0,0,0.5, 0,1,0,0.5, 0,0,1,1, 0,0,0,1);
@@ -144,29 +144,18 @@ for(var index = 1; index < 10; index++)
     RightSmallTenacleMatricesRelativeToNose[index] = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToTorso, RightSmallTentacleMatrices[index], -Math.PI/9 + (index - 1)*2*(Math.PI/9)/8 ,-Math.PI/9,0);
 }
 
-var frontRightClaw1RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, Claw1Matrix);
-var frontRightClaw2RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, Claw2Matrix);
-var frontRightClaw3RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, Claw3Matrix);
-var frontRightClaw4RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, Claw4Matrix);
-var frontRightClaw5RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, Claw5Matrix);
+var frontRightClawRelativeToPaw = [];
+var frontLeftClawRelativeToPaw = [];
+var backLeftClawRelativeToPaw = [];
+var backRightClawRelativeToPaw = [];
 
-var frontLeftClaw1RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontLeftPawMatrixRelativeToTorso, Claw1Matrix);
-var frontLeftClaw2RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontLeftPawMatrixRelativeToTorso, Claw2Matrix);
-var frontLeftClaw3RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontLeftPawMatrixRelativeToTorso, Claw3Matrix);
-var frontLeftClaw4RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontLeftPawMatrixRelativeToTorso, Claw4Matrix);
-var frontLeftClaw5RelativeToPaw = new THREE.Matrix4().multiplyMatrices(frontLeftPawMatrixRelativeToTorso, Claw5Matrix);
-
-var backLeftClaw1RelativeToPaw = new THREE.Matrix4().multiplyMatrices(backLeftPawMatrixRelativeToTorso, Claw1Matrix);
-var backLeftClaw2RelativeToPaw = new THREE.Matrix4().multiplyMatrices(backLeftPawMatrixRelativeToTorso, Claw2Matrix);
-var backLeftClaw3RelativeToPaw = new THREE.Matrix4().multiplyMatrices(backLeftPawMatrixRelativeToTorso, Claw3Matrix);
-var backLeftClaw4RelativeToPaw = new THREE.Matrix4().multiplyMatrices(backLeftPawMatrixRelativeToTorso, Claw4Matrix);
-var backLeftClaw5RelativeToPaw = new THREE.Matrix4().multiplyMatrices(backLeftPawMatrixRelativeToTorso, Claw5Matrix);
-
-var backRightClaw1RelativeToPaw = new THREE.Matrix4().multiplyMatrices(backRightPawMatrixRelativeToTorso, Claw1Matrix);
-var backRightClaw2RelativeToPaw = new THREE.Matrix4().multiplyMatrices(backRightPawMatrixRelativeToTorso, Claw2Matrix);
-var backRightClaw3RelativeToPaw = new THREE.Matrix4().multiplyMatrices(backRightPawMatrixRelativeToTorso, Claw3Matrix);
-var backRightClaw4RelativeToPaw = new THREE.Matrix4().multiplyMatrices(backRightPawMatrixRelativeToTorso, Claw4Matrix);
-var backRightClaw5RelativeToPaw = new THREE.Matrix4().multiplyMatrices(backRightPawMatrixRelativeToTorso, Claw5Matrix);
+for(var index = 1; index < 6; index++)
+{
+    frontRightClawRelativeToPaw[index] =  new THREE.Matrix4().multiplyMatrices(frontRightPawMatrixRelativeToTorso, ClawMatrices[index]);
+    frontLeftClawRelativeToPaw[index] = new THREE.Matrix4().multiplyMatrices(frontLeftPawMatrixRelativeToTorso, ClawMatrices[index]);
+    backLeftClawRelativeToPaw[index] = new THREE.Matrix4().multiplyMatrices(backLeftPawMatrixRelativeToTorso, ClawMatrices[index]);
+    backRightClawRelativeToPaw[index] = new THREE.Matrix4().multiplyMatrices(backRightPawMatrixRelativeToTorso, ClawMatrices[index]);
+}
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
 // Note: Use of parent attribute is not allowed.
@@ -209,83 +198,83 @@ backLeftPaw.setMatrix(backLeftPawMatrixRelativeToTorso)
 scene.add(backLeftPaw);
 
 var frontRightClaw1 = new THREE.Mesh(clawGeometry,normalMaterial);
-frontRightClaw1.setMatrix(frontRightClaw1RelativeToPaw)
+frontRightClaw1.setMatrix(frontRightClawRelativeToPaw[1])
 scene.add(frontRightClaw1);
 
 var frontRightClaw2 = new THREE.Mesh(clawGeometry,normalMaterial);
-frontRightClaw2.setMatrix(frontRightClaw2RelativeToPaw)
+frontRightClaw2.setMatrix(frontRightClawRelativeToPaw[2])
 scene.add(frontRightClaw2);
 
 var frontRightClaw3 = new THREE.Mesh(clawGeometry,normalMaterial);
-frontRightClaw3.setMatrix(frontRightClaw3RelativeToPaw)
+frontRightClaw3.setMatrix(frontRightClawRelativeToPaw[3])
 scene.add(frontRightClaw3);
 
 var frontRightClaw4 = new THREE.Mesh(clawGeometry,normalMaterial);
-frontRightClaw4.setMatrix(frontRightClaw4RelativeToPaw)
+frontRightClaw4.setMatrix(frontRightClawRelativeToPaw[4])
 scene.add(frontRightClaw4);
 
 var frontRightClaw5 = new THREE.Mesh(clawGeometry,normalMaterial);
-frontRightClaw5.setMatrix(frontRightClaw5RelativeToPaw)
+frontRightClaw5.setMatrix(frontRightClawRelativeToPaw[5])
 scene.add(frontRightClaw5);
 
 var frontLeftClaw1 = new THREE.Mesh(clawGeometry,normalMaterial);
-frontLeftClaw1.setMatrix(frontLeftClaw1RelativeToPaw)
+frontLeftClaw1.setMatrix(frontLeftClawRelativeToPaw[1])
 scene.add(frontLeftClaw1);
 
 var frontLeftClaw2 = new THREE.Mesh(clawGeometry,normalMaterial);
-frontLeftClaw2.setMatrix(frontLeftClaw2RelativeToPaw)
+frontLeftClaw2.setMatrix(frontLeftClawRelativeToPaw[2])
 scene.add(frontLeftClaw2);
 
 var frontLeftClaw3 = new THREE.Mesh(clawGeometry,normalMaterial);
-frontLeftClaw3.setMatrix(frontLeftClaw3RelativeToPaw)
+frontLeftClaw3.setMatrix(frontLeftClawRelativeToPaw[3])
 scene.add(frontLeftClaw3);
 
 var frontLeftClaw4 = new THREE.Mesh(clawGeometry,normalMaterial);
-frontLeftClaw4.setMatrix(frontLeftClaw4RelativeToPaw)
+frontLeftClaw4.setMatrix(frontLeftClawRelativeToPaw[4])
 scene.add(frontLeftClaw4);
 
 var frontLeftClaw5 = new THREE.Mesh(clawGeometry,normalMaterial);
-frontLeftClaw5.setMatrix(frontLeftClaw5RelativeToPaw)
+frontLeftClaw5.setMatrix(frontLeftClawRelativeToPaw[5])
 scene.add(frontLeftClaw5);
 
 var backRightClaw1 = new THREE.Mesh(clawGeometry,normalMaterial);
-backRightClaw1.setMatrix(backRightClaw1RelativeToPaw)
+backRightClaw1.setMatrix(backRightClawRelativeToPaw[1])
 scene.add(backRightClaw1);
 
 var backRightClaw2 = new THREE.Mesh(clawGeometry,normalMaterial);
-backRightClaw2.setMatrix(backRightClaw2RelativeToPaw)
+backRightClaw2.setMatrix(backRightClawRelativeToPaw[2])
 scene.add(backRightClaw2);
 
 var backRightClaw3 = new THREE.Mesh(clawGeometry,normalMaterial);
-backRightClaw3.setMatrix(backRightClaw3RelativeToPaw)
+backRightClaw3.setMatrix(backRightClawRelativeToPaw[3])
 scene.add(backRightClaw3);
 
 var backRightClaw4 = new THREE.Mesh(clawGeometry,normalMaterial);
-backRightClaw4.setMatrix(backRightClaw4RelativeToPaw)
+backRightClaw4.setMatrix(backRightClawRelativeToPaw[4])
 scene.add(backRightClaw4);
 
 var backRightClaw5 = new THREE.Mesh(clawGeometry,normalMaterial);
-backRightClaw5.setMatrix(backRightClaw5RelativeToPaw)
+backRightClaw5.setMatrix(backRightClawRelativeToPaw[5])
 scene.add(backRightClaw5);
 
 var backLeftClaw1 = new THREE.Mesh(clawGeometry,normalMaterial);
-backLeftClaw1.setMatrix(backLeftClaw1RelativeToPaw)
+backLeftClaw1.setMatrix(backLeftClawRelativeToPaw[1])
 scene.add(backLeftClaw1);
 
 var backLeftClaw2 = new THREE.Mesh(clawGeometry,normalMaterial);
-backLeftClaw2.setMatrix(backLeftClaw2RelativeToPaw)
+backLeftClaw2.setMatrix(backLeftClawRelativeToPaw[2])
 scene.add(backLeftClaw2);
 
 var backLeftClaw3 = new THREE.Mesh(clawGeometry,normalMaterial);
-backLeftClaw3.setMatrix(backLeftClaw3RelativeToPaw)
+backLeftClaw3.setMatrix(backLeftClawRelativeToPaw[3])
 scene.add(backLeftClaw3);
 
 var backLeftClaw4 = new THREE.Mesh(clawGeometry,normalMaterial);
-backLeftClaw4.setMatrix(backLeftClaw4RelativeToPaw)
+backLeftClaw4.setMatrix(backLeftClawRelativeToPaw[4])
 scene.add(backLeftClaw4);
 
 var backLeftClaw5 = new THREE.Mesh(clawGeometry,normalMaterial);
-backLeftClaw5.setMatrix(backLeftClaw5RelativeToPaw)
+backLeftClaw5.setMatrix(backLeftClawRelativeToPaw[5])
 scene.add(backLeftClaw5);
 
 var upLeftLargeTentacle = new THREE.Mesh(largeTenticleGeometry,normalMaterial);
@@ -565,278 +554,71 @@ function updateBody() {
           rightSmallTenticle9RotMatrix.multiplyMatrices(rightSmallTenticle9RotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
           rightSmallTentacle9.setMatrix(rightSmallTenticle9RotMatrix);
 
-          var frontRightPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw1Matrix);
+          var frontRightPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, ClawMatrices[1]);
           frontRightClaw1.setMatrix(frontRightPawClaw1RotMatrix);
 
-          var frontRightPawClaw2RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw2Matrix);
+          var frontRightPawClaw2RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, ClawMatrices[2]);
           frontRightClaw2.setMatrix(frontRightPawClaw2RotMatrix);
 
-          var frontRightPawClaw3RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw3Matrix);
+          var frontRightPawClaw3RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, ClawMatrices[3]);
           frontRightClaw3.setMatrix(frontRightPawClaw3RotMatrix);
 
-          var frontRightPawClaw4RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw4Matrix);
+          var frontRightPawClaw4RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, ClawMatrices[4]);
           frontRightClaw4.setMatrix(frontRightPawClaw4RotMatrix);
 
-          var frontRightPawClaw5RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw5Matrix);
+          var frontRightPawClaw5RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, ClawMatrices[5]);
           frontRightClaw5.setMatrix(frontRightPawClaw5RotMatrix);
 
-          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, Claw1Matrix);
+          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, ClawMatrices[1]);
           frontLeftClaw1.setMatrix(frontLeftPawClaw1RotMatrix);
 
-          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, Claw2Matrix);
-          frontLeftClaw2.setMatrix(frontLeftPawClaw1RotMatrix);
+          var frontLeftPawClaw2RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, ClawMatrices[2]);
+          frontLeftClaw2.setMatrix(frontLeftPawClaw2RotMatrix);
 
-          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, Claw3Matrix);
-          frontLeftClaw3.setMatrix(frontLeftPawClaw1RotMatrix);
+          var frontLeftPawClaw3RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, ClawMatrices[3]);
+          frontLeftClaw3.setMatrix(frontLeftPawClaw3RotMatrix);
 
-          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, Claw4Matrix);
-          frontLeftClaw4.setMatrix(frontLeftPawClaw1RotMatrix);
+          var frontLeftPawClaw4RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, ClawMatrices[4]);
+          frontLeftClaw4.setMatrix(frontLeftPawClaw4RotMatrix);
 
-          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, Claw5Matrix);
-          frontLeftClaw5.setMatrix(frontLeftPawClaw1RotMatrix);
+          var frontLeftPawClaw5RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, ClawMatrices[5]);
+          frontLeftClaw5.setMatrix(frontLeftPawClaw5RotMatrix);
 
-          var backRightPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, Claw1Matrix);
+          var backRightPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, ClawMatrices[1]);
           backRightClaw1.setMatrix(backRightPawClaw1RotMatrix);
 
-          var backRightPawClaw2RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, Claw2Matrix);
+          var backRightPawClaw2RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, ClawMatrices[2]);
           backRightClaw2.setMatrix(backRightPawClaw2RotMatrix);
 
-          var backRightPawClaw3RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, Claw3Matrix);
+          var backRightPawClaw3RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, ClawMatrices[3]);
           backRightClaw3.setMatrix(backRightPawClaw3RotMatrix);
 
-          var backRightPawClaw4RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, Claw4Matrix);
+          var backRightPawClaw4RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, ClawMatrices[4]);
           backRightClaw4.setMatrix(backRightPawClaw4RotMatrix);
 
-          var backRightPawClaw5RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, Claw5Matrix);
+          var backRightPawClaw5RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, ClawMatrices[5]);
           backRightClaw5.setMatrix(backRightPawClaw5RotMatrix);
 
-          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, Claw1Matrix);
+          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, ClawMatrices[1]);
           backLeftClaw1.setMatrix(backLeftPawClaw1RotMatrix);
 
-          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, Claw2Matrix);
-          backLeftClaw2.setMatrix(backLeftPawClaw1RotMatrix);
+          var backLeftPawClaw2RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, ClawMatrices[2]);
+          backLeftClaw2.setMatrix(backLeftPawClaw2RotMatrix);
 
-          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, Claw3Matrix);
-          backLeftClaw3.setMatrix(backLeftPawClaw1RotMatrix);
+          var backLeftPawClaw3RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, ClawMatrices[3]);
+          backLeftClaw3.setMatrix(backLeftPawClaw3RotMatrix);
 
-          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, Claw4Matrix);
-          backLeftClaw4.setMatrix(backLeftPawClaw1RotMatrix);
+          var backLeftPawClaw4RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, ClawMatrices[4]);
+          backLeftClaw4.setMatrix(backLeftPawClaw4RotMatrix);
 
-          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, Claw5Matrix);
-          backLeftClaw5.setMatrix(backLeftPawClaw1RotMatrix);
+          var backLeftPawClaw5RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, ClawMatrices[5]);
+          backLeftClaw5.setMatrix(backLeftPawClaw5RotMatrix);
 
           break;
 
       //Body tilt down
       case(key == "D" && animate):
-          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
-          if (time > time_end){
-              p = p1;
-              animate = false;
-              break;
-          }
-
-          p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
-
-          var rotateZ = new THREE.Matrix4().set(1,        0,         0,        0,
-              0, Math.cos(-p),-Math.sin(-p), 0,
-              0, Math.sin(-p), Math.cos(-p), 0,
-              0,        0,         0,        1);
-
-          var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
-          torso.setMatrix(torsoRotMatrix);
-
-          var headRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, headMatrix);
-          head.setMatrix(headRotMatrix);
-
-          var tailRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, tailMatrix);
-          tail.setMatrix(tailRotMatrix);
-
-          var noseRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, noseMatrix);
-          nose.setMatrix(noseRotMatrix);
-
-          var frontRightPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, frontRightPawMatrix);
-          frontRightPawRotMatrix.multiplyMatrices(frontRightPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
-          frontRightPaw.setMatrix(frontRightPawRotMatrix);
-
-          var frontLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, frontLeftPawMatrix);
-          frontLeftPawRotMatrix.multiplyMatrices(frontLeftPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
-          frontLeftPaw.setMatrix(frontLeftPawRotMatrix);
-
-          var backRightPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backRightPawMatrix);
-          backRightPawRotMatrix.multiplyMatrices(backRightPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
-          backRightPaw.setMatrix(backRightPawRotMatrix);
-
-          var backLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backLeftPawMatrix);
-          backLeftPawRotMatrix.multiplyMatrices(backLeftPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
-          backLeftPaw.setMatrix(backLeftPawRotMatrix);
-
-          var upLeftLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, upLeftLargeTentacleMatrix);
-          upLeftLargeTenticleRotMatrix.multiplyMatrices(upLeftLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
-
-          var lowLeftLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowLeftLargeTentacleMatrix);
-          lowLeftLargeTenticleRotMatrix.multiplyMatrices(lowLeftLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
-
-          var upRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, upRightLargeTentacleMatrix);
-          upRightLargeTenticleRotMatrix.multiplyMatrices(upRightLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
-
-          var lowRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowRightLargeTentacleMatrix);
-          lowRightLargeTenticleRotMatrix.multiplyMatrices(lowRightLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
-
-          var leftSmallTenticle1RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[1]);
-          leftSmallTenticle1RotMatrix.multiplyMatrices(leftSmallTenticle1RotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          leftSmallTenticle1RotMatrix.multiplyMatrices(leftSmallTenticle1RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9));
-          leftSmallTentacle1.setMatrix(leftSmallTenticle1RotMatrix);
-
-          var leftSmallTenticle2RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[2]);
-          leftSmallTenticle2RotMatrix.multiplyMatrices(leftSmallTenticle2RotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          leftSmallTenticle2RotMatrix.multiplyMatrices(leftSmallTenticle2RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 2*(Math.PI/9)/8));
-          leftSmallTentacle2.setMatrix(leftSmallTenticle2RotMatrix);
-
-          var leftSmallTenticle3RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[3]);
-          leftSmallTenticle3RotMatrix.multiplyMatrices(leftSmallTenticle3RotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          leftSmallTenticle3RotMatrix.multiplyMatrices(leftSmallTenticle3RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 4*(Math.PI/9)/8));
-          leftSmallTentacle3.setMatrix(leftSmallTenticle3RotMatrix);
-
-          var leftSmallTenticle4RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[4]);
-          leftSmallTenticle4RotMatrix.multiplyMatrices(leftSmallTenticle4RotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          leftSmallTenticle4RotMatrix.multiplyMatrices(leftSmallTenticle4RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 6*(Math.PI/9)/8));
-          leftSmallTentacle4.setMatrix(leftSmallTenticle4RotMatrix);
-
-          var leftSmallTenticle5RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[5]);
-          leftSmallTenticle5RotMatrix.multiplyMatrices(leftSmallTenticle5RotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          leftSmallTenticle5RotMatrix.multiplyMatrices(leftSmallTenticle5RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 8*(Math.PI/9)/8));
-          leftSmallTentacle5.setMatrix(leftSmallTenticle5RotMatrix);
-
-          var leftSmallTenticle6RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[6]);
-          leftSmallTenticle6RotMatrix.multiplyMatrices(leftSmallTenticle6RotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          leftSmallTenticle6RotMatrix.multiplyMatrices(leftSmallTenticle6RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 10*(Math.PI/9)/8));
-          leftSmallTentacle6.setMatrix(leftSmallTenticle6RotMatrix);
-
-          var leftSmallTenticle7RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[7]);
-          leftSmallTenticle7RotMatrix.multiplyMatrices(leftSmallTenticle7RotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          leftSmallTenticle7RotMatrix.multiplyMatrices(leftSmallTenticle7RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 12*(Math.PI/9)/8));
-          leftSmallTentacle7.setMatrix(leftSmallTenticle7RotMatrix);
-
-          var leftSmallTenticle8RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[8]);
-          leftSmallTenticle8RotMatrix.multiplyMatrices(leftSmallTenticle8RotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          leftSmallTenticle8RotMatrix.multiplyMatrices(leftSmallTenticle8RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 14*(Math.PI/9)/8));
-          leftSmallTentacle8.setMatrix(leftSmallTenticle8RotMatrix);
-
-          var leftSmallTenticle9RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[9]);
-          leftSmallTenticle9RotMatrix.multiplyMatrices(leftSmallTenticle9RotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
-          leftSmallTenticle9RotMatrix.multiplyMatrices(leftSmallTenticle9RotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
-          leftSmallTentacle9.setMatrix(leftSmallTenticle9RotMatrix);
-
-          var rightSmallTenticle1RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[1]);
-          rightSmallTenticle1RotMatrix.multiplyMatrices(rightSmallTenticle1RotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          rightSmallTenticle1RotMatrix.multiplyMatrices(rightSmallTenticle1RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9));
-          rightSmallTentacle1.setMatrix(rightSmallTenticle1RotMatrix);
-
-          var rightSmallTenticle2RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[2]);
-          rightSmallTenticle2RotMatrix.multiplyMatrices(rightSmallTenticle2RotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          rightSmallTenticle2RotMatrix.multiplyMatrices(rightSmallTenticle2RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 2*(Math.PI/9)/8));
-          rightSmallTentacle2.setMatrix(rightSmallTenticle2RotMatrix);
-
-          var rightSmallTenticle3RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[3]);
-          rightSmallTenticle3RotMatrix.multiplyMatrices(rightSmallTenticle3RotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          rightSmallTenticle3RotMatrix.multiplyMatrices(rightSmallTenticle3RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 4*(Math.PI/9)/8));
-          rightSmallTentacle3.setMatrix(rightSmallTenticle3RotMatrix);
-
-          var rightSmallTenticle4RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[4]);
-          rightSmallTenticle4RotMatrix.multiplyMatrices(rightSmallTenticle4RotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          rightSmallTenticle4RotMatrix.multiplyMatrices(rightSmallTenticle4RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 6*(Math.PI/9)/8));
-          rightSmallTentacle4.setMatrix(rightSmallTenticle4RotMatrix);
-
-          var rightSmallTenticle5RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[5]);
-          rightSmallTenticle5RotMatrix.multiplyMatrices(rightSmallTenticle5RotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          rightSmallTenticle5RotMatrix.multiplyMatrices(rightSmallTenticle5RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 8*(Math.PI/9)/8));
-          rightSmallTentacle5.setMatrix(rightSmallTenticle5RotMatrix);
-
-          var rightSmallTenticle6RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[6]);
-          rightSmallTenticle6RotMatrix.multiplyMatrices(rightSmallTenticle6RotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          rightSmallTenticle6RotMatrix.multiplyMatrices(rightSmallTenticle6RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 10*(Math.PI/9)/8));
-          rightSmallTentacle6.setMatrix(rightSmallTenticle6RotMatrix);
-
-          var rightSmallTenticle7RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[7]);
-          rightSmallTenticle7RotMatrix.multiplyMatrices(rightSmallTenticle7RotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          rightSmallTenticle7RotMatrix.multiplyMatrices(rightSmallTenticle7RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 12*(Math.PI/9)/8));
-          rightSmallTentacle7.setMatrix(rightSmallTenticle7RotMatrix);
-
-          var rightSmallTenticle8RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[8]);
-          rightSmallTenticle8RotMatrix.multiplyMatrices(rightSmallTenticle8RotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          rightSmallTenticle8RotMatrix.multiplyMatrices(rightSmallTenticle8RotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI/9 + 14*(Math.PI/9)/8));
-          rightSmallTentacle8.setMatrix(rightSmallTenticle8RotMatrix);
-
-          var rightSmallTenticle9RotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[9]);
-          rightSmallTenticle9RotMatrix.multiplyMatrices(rightSmallTenticle9RotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
-          rightSmallTenticle9RotMatrix.multiplyMatrices(rightSmallTenticle9RotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
-          rightSmallTentacle9.setMatrix(rightSmallTenticle9RotMatrix);
-
-          var frontPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw1Matrix);
-          frontRightClaw1.setMatrix(frontPawClaw1RotMatrix);
-
-          var frontPawClaw2RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw2Matrix);
-          frontRightClaw2.setMatrix(frontPawClaw2RotMatrix);
-
-          var frontPawClaw3RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw3Matrix);
-          frontRightClaw3.setMatrix(frontPawClaw3RotMatrix);
-
-          var frontPawClaw4RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw4Matrix);
-          frontRightClaw4.setMatrix(frontPawClaw4RotMatrix);
-
-          var frontPawClaw5RotMatrix = new THREE.Matrix4().multiplyMatrices(frontRightPawRotMatrix, Claw5Matrix);
-          frontRightClaw5.setMatrix(frontPawClaw5RotMatrix);
-
-          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, Claw1Matrix);
-          frontLeftClaw1.setMatrix(frontLeftPawClaw1RotMatrix);
-
-          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, Claw2Matrix);
-          frontLeftClaw2.setMatrix(frontLeftPawClaw1RotMatrix);
-
-          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, Claw3Matrix);
-          frontLeftClaw3.setMatrix(frontLeftPawClaw1RotMatrix);
-
-          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, Claw4Matrix);
-          frontLeftClaw4.setMatrix(frontLeftPawClaw1RotMatrix);
-
-          var frontLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(frontLeftPawRotMatrix, Claw5Matrix);
-          frontLeftClaw5.setMatrix(frontLeftPawClaw1RotMatrix);
-
-          var backRightPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, Claw1Matrix);
-          backRightClaw1.setMatrix(backRightPawClaw1RotMatrix);
-
-          var backRightPawClaw2RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, Claw2Matrix);
-          backRightClaw2.setMatrix(backRightPawClaw2RotMatrix);
-
-          var backRightPawClaw3RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, Claw3Matrix);
-          backRightClaw3.setMatrix(backRightPawClaw3RotMatrix);
-
-          var backRightPawClaw4RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, Claw4Matrix);
-          backRightClaw4.setMatrix(backRightPawClaw4RotMatrix);
-
-          var backRightPawClaw5RotMatrix = new THREE.Matrix4().multiplyMatrices(backRightPawRotMatrix, Claw5Matrix);
-          backRightClaw5.setMatrix(backRightPawClaw5RotMatrix);
-
-          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, Claw1Matrix);
-          backLeftClaw1.setMatrix(backLeftPawClaw1RotMatrix);
-
-          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, Claw2Matrix);
-          backLeftClaw2.setMatrix(backLeftPawClaw1RotMatrix);
-
-          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, Claw3Matrix);
-          backLeftClaw3.setMatrix(backLeftPawClaw1RotMatrix);
-
-          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, Claw4Matrix);
-          backLeftClaw4.setMatrix(backLeftPawClaw1RotMatrix);
-
-          var backLeftPawClaw1RotMatrix = new THREE.Matrix4().multiplyMatrices(backLeftPawRotMatrix, Claw5Matrix);
-          backLeftClaw5.setMatrix(backLeftPawClaw1RotMatrix);
 
           break;
 
