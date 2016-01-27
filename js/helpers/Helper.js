@@ -33,3 +33,13 @@ Helper.createYAxisRotMatrixForDegree = function(degreeInRad)
                                                         0,          0,          0,          1);
     return rotate;
 }
+
+Helper.createObjectMatrixRelativeTo= function(relativeObjectMatrix, actualObjectMatrix, xRot, yRot, zRot)
+{
+    var actualMatrix = new THREE.Matrix4().multiplyMatrices(relativeObjectMatrix, actualObjectMatrix);
+    actualMatrix.multiplyMatrices(actualMatrix, Helper.createYAxisRotMatrixForDegree(yRot));
+    actualMatrix.multiplyMatrices(actualMatrix, Helper.createXAxisRotMatrixForDegree(xRot));
+
+    return actualMatrix;
+}
+
