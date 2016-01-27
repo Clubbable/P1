@@ -79,7 +79,7 @@ var headScale = new THREE.Matrix4().set(3,0,0,0, 0,3,0,0, 0,0,2,0, 0,0,0,1);
 headGeometry.applyMatrix(headScale);
 
 var noseGeometry = makeCube();
-var noseScale = new THREE.Matrix4().set(1.5,0,0,0, 0,1.5,0,0, 0,0,1,0, 0,0,0,1);
+var noseScale = new THREE.Matrix4().set(2.3,0,0,0, 0,2.3,0,0, 0,0,1,0, 0,0,0,1);
 noseGeometry.applyMatrix(noseScale);
 
 var tailGeometry = makeCube();
