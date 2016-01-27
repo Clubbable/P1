@@ -71,9 +71,9 @@ function makeCube() {
 
 // GEOMETRY: Specifies the size
 var torsoGeometry = Helper.createGeometry(new THREE.Matrix4().set(5,0,0,0, 0,5,0,0, 0,0,8,0, 0,0,0,1));
-var headGeometry = Helper.createGeometry(new THREE.Matrix4().set(3,0,0,0, 0,3,0,0, 0,0,2,0, 0,0,0,1));
+var headGeometry = Helper.createGeometry(new THREE.Matrix4().set(3.5,0,0,0, 0,3.5,0,0, 0,0,2,0, 0,0,0,1));
 var noseGeometry = Helper.createGeometry(new THREE.Matrix4().set(2.3,0,0,0, 0,2.3,0,0, 0,0,1,0, 0,0,0,1));
-var tailGeometry = Helper.createGeometry(new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,5,0, 0,0,0,1));
+var tailGeometry = Helper.createGeometry(new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,7,0, 0,0,0,1));
 var PawGeometry = Helper.createGeometry(new THREE.Matrix4().set(3,0,0,0, 0,1,0,0, 0,0,5,0, 0,0,0,1));
 var clawGeometry = Helper.createGeometry(new THREE.Matrix4().set(0.4,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1));
 var largeTenticleGeometry = Helper.createGeometry(new THREE.Matrix4().set(0.4,0,0,0, 0,0.4,0,0, 0,0,1,0, 0,0,0,1));
@@ -82,9 +82,9 @@ var smallTenticleGeometry = Helper.createGeometry(new THREE.Matrix4().set(0.2,0,
 // MATRICES: Specifies the location
 
 var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,10, 0,0,1,0, 0,0,0,1);
-var headMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,5, 0,0,0,1);
-var noseMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,6.5, 0,0,0,1);
-var tailMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-6, 0,0,0,1);
+var headMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,4.25, 0,0,0,1);
+var noseMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,1.5, 0,0,0,1);
+var tailMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-3.5, 0,0,0,1);
 
 var frontRightPawMatrix = new THREE.Matrix4().set(1,0,0,-2.5, 0,1,0,-2.5, 0,0,1,4, 0,0,0,1);
 var frontLeftPawMatrix = new THREE.Matrix4().set(1,0,0,2.5, 0,1,0,-2.5, 0,0,1,4, 0,0,0,1);
@@ -116,7 +116,7 @@ for(var index = 1; index < 10; index++)
 
 
 var headMatrixRelativeToTorso =  Helper.createObjectMatrixRelativeTo(torsoMatrix, headMatrix, 0,0,0);
-var noseMatrixRelativeToTorso =  Helper.createObjectMatrixRelativeTo(torsoMatrix, noseMatrix, 0,0,0);
+var noseMatrixRelativeToHead =  Helper.createObjectMatrixRelativeTo(headMatrixRelativeToTorso, noseMatrix, 0,0,0);
 var tailMatrixRelativeToTorso =  Helper.createObjectMatrixRelativeTo(torsoMatrix, tailMatrix, 0,0,0);
 
 var frontRightPawMatrixRelativeToTorso = Helper.createObjectMatrixRelativeTo(torsoMatrix, frontRightPawMatrix, Math.PI/9,0,0);
@@ -124,21 +124,21 @@ var frontLeftPawMatrixRelativeToTorso = Helper.createObjectMatrixRelativeTo(tors
 var backRightPawMatrixRelativeToTorso = Helper.createObjectMatrixRelativeTo(torsoMatrix, backRightPawMatrix, Math.PI/9,0,0);
 var backLeftPawMatrixRelativeToTorso = Helper.createObjectMatrixRelativeTo(torsoMatrix, backLeftPawMatrix, Math.PI/9,0,0);
 
-var upLeftLargeTentacleRelativeToNose = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToTorso, upLeftLargeTentacleMatrix, 0,Math.PI/9,0);
-var lowLeftLargeTentacleRelativeToNose = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToTorso, lowLeftLargeTentacleMatrix, 0,Math.PI/9,0);
-var upRightLargeTentacleRelativeToNose = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToTorso, upRightLargeTentacleMatrix, 0,-Math.PI/9,0);
-var lowRightLargeTentacleRelativeToNose = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToTorso, lowRightLargeTentacleMatrix, 0,-Math.PI/9,0);
+var upLeftLargeTentacleRelativeToNose = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToHead, upLeftLargeTentacleMatrix, 0,Math.PI/9,0);
+var lowLeftLargeTentacleRelativeToNose = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToHead, lowLeftLargeTentacleMatrix, 0,Math.PI/9,0);
+var upRightLargeTentacleRelativeToNose = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToHead, upRightLargeTentacleMatrix, 0,-Math.PI/9,0);
+var lowRightLargeTentacleRelativeToNose = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToHead, lowRightLargeTentacleMatrix, 0,-Math.PI/9,0);
 
 var leftSmallTenacleMatricesRelativeToNose = [];
 for(var index = 1; index < 10; index++)
 {
-    leftSmallTenacleMatricesRelativeToNose[index] = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToTorso, LeftSmallTentacleMatrices[index], -Math.PI/9 + (index - 1)*2*(Math.PI/9)/8 ,Math.PI/9,0);
+    leftSmallTenacleMatricesRelativeToNose[index] = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToHead, LeftSmallTentacleMatrices[index], -Math.PI/9 + (index - 1)*2*(Math.PI/9)/8 ,Math.PI/9,0);
 }
 
 var RightSmallTenacleMatricesRelativeToNose = [];
 for(var index = 1; index < 10; index++)
 {
-    RightSmallTenacleMatricesRelativeToNose[index] = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToTorso, RightSmallTentacleMatrices[index], -Math.PI/9 + (index - 1)*2*(Math.PI/9)/8 ,-Math.PI/9,0);
+    RightSmallTenacleMatricesRelativeToNose[index] = Helper.createObjectMatrixRelativeTo(noseMatrixRelativeToHead, RightSmallTentacleMatrices[index], -Math.PI/9 + (index - 1)*2*(Math.PI/9)/8 ,-Math.PI/9,0);
 }
 
 var frontRightClawRelativeToPaw = [];
@@ -157,7 +157,7 @@ for(var index = 1; index < 6; index++)
 // CREATE BODY
 var torso = Helper.addObjectToScene(torsoGeometry, torsoMatrix, normalMaterial, scene);
 var head = Helper.addObjectToScene(headGeometry, headMatrixRelativeToTorso, normalMaterial, scene);
-var nose = Helper.addObjectToScene(noseGeometry, noseMatrixRelativeToTorso, normalMaterial, scene);
+var nose = Helper.addObjectToScene(noseGeometry, noseMatrixRelativeToHead, normalMaterial, scene);
 var tail = Helper.addObjectToScene(tailGeometry, tailMatrixRelativeToTorso, normalMaterial, scene);
 var frontRightPaw = Helper.addObjectToScene(PawGeometry, frontRightPawMatrixRelativeToTorso, normalMaterial, scene);
 var frontLeftPaw = Helper.addObjectToScene(PawGeometry, frontLeftPawMatrixRelativeToTorso, normalMaterial, scene);
@@ -221,6 +221,10 @@ function init_animation(p_start,p_end,t_length){
   return;
 }
 
+var torsoRotMatrix;
+var headRotMatrix;
+var noseRotMatrix;
+
 function updateBody() {
   switch(true)
   {
@@ -241,16 +245,16 @@ function updateBody() {
                                                 0, Math.sin(-p), Math.cos(-p), 0,
                                                 0,        0,         0,        1);
 
-          var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
+          torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
           torso.setMatrix(torsoRotMatrix);
 
-          var headRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, headMatrix);
+          headRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, headMatrix);
           head.setMatrix(headRotMatrix);
 
           var tailRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, tailMatrix);
           tail.setMatrix(tailRotMatrix);
 
-          var noseRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, noseMatrix);
+          noseRotMatrix = new THREE.Matrix4().multiplyMatrices(headRotMatrix, noseMatrix);
           nose.setMatrix(noseRotMatrix);
 
           var frontRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(torsoRotMatrix, frontRightPawMatrix, Math.PI/9,0,0);
@@ -297,7 +301,7 @@ function updateBody() {
           break;
 
       //Body tilt down
-      case(key == "D" && animate):
+      case(key == "E" && animate):
           var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
           if (time > time_end){
@@ -313,60 +317,48 @@ function updateBody() {
               0, Math.sin(-p), Math.cos(-p), 0,
               0,        0,         0,        1);
 
-          var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
+          torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
           torso.setMatrix(torsoRotMatrix);
 
-          var headRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, headMatrix);
+          headRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, headMatrix);
           head.setMatrix(headRotMatrix);
 
           var tailRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, tailMatrix);
           tail.setMatrix(tailRotMatrix);
 
-          var noseRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, noseMatrix);
+          noseRotMatrix = new THREE.Matrix4().multiplyMatrices(headRotMatrix, noseMatrix);
           nose.setMatrix(noseRotMatrix);
 
-          var frontRightPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, frontRightPawMatrix);
-          frontRightPawRotMatrix.multiplyMatrices(frontRightPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
+          var frontRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(torsoRotMatrix, frontRightPawMatrix, Math.PI/9,0,0);
           frontRightPaw.setMatrix(frontRightPawRotMatrix);
 
-          var frontLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, frontLeftPawMatrix);
-          frontLeftPawRotMatrix.multiplyMatrices(frontLeftPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
+          var frontLeftPawRotMatrix = Helper.createObjectMatrixRelativeTo(torsoRotMatrix, frontLeftPawMatrix, Math.PI/9,0,0);
           frontLeftPaw.setMatrix(frontLeftPawRotMatrix);
 
-          var backRightPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backRightPawMatrix);
-          backRightPawRotMatrix.multiplyMatrices(backRightPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
+          var backRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(torsoRotMatrix, backRightPawMatrix, Math.PI/9,0,0);
           backRightPaw.setMatrix(backRightPawRotMatrix);
 
-          var backLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backLeftPawMatrix);
-          backLeftPawRotMatrix.multiplyMatrices(backLeftPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
+          var backLeftPawRotMatrix = Helper.createObjectMatrixRelativeTo(torsoRotMatrix, backLeftPawMatrix, Math.PI/9,0,0);
           backLeftPaw.setMatrix(backLeftPawRotMatrix);
 
-          var upLeftLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, upLeftLargeTentacleMatrix);
-          upLeftLargeTenticleRotMatrix.multiplyMatrices(upLeftLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
+          var upLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upLeftLargeTentacleMatrix, 0,Math.PI/9,0);
           upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
 
-          var lowLeftLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowLeftLargeTentacleMatrix);
-          lowLeftLargeTenticleRotMatrix.multiplyMatrices(lowLeftLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
+          var lowLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowLeftLargeTentacleMatrix, 0,Math.PI/9,0);
           lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
 
-          var upRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, upRightLargeTentacleMatrix);
-          upRightLargeTenticleRotMatrix.multiplyMatrices(upRightLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
+          var upRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upRightLargeTentacleMatrix, 0,-Math.PI/9,0);
           upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
 
-          var lowRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowRightLargeTentacleMatrix);
-          lowRightLargeTenticleRotMatrix.multiplyMatrices(lowRightLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
+          var lowRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowRightLargeTentacleMatrix, 0,-Math.PI/9,0);
           lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
 
           for(var index = 1; index < 10; index++)
           {
-              var leftSmallTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[index]);
-              leftSmallTenticleRotMatrix.multiplyMatrices(leftSmallTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI / 9));
-              leftSmallTenticleRotMatrix.multiplyMatrices(leftSmallTenticleRotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8));
+              var leftSmallTenticleRotMatrix =  Helper.createObjectMatrixRelativeTo(noseRotMatrix, LeftSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, Math.PI/9,0);
               leftSmallTentacles[index].setMatrix(leftSmallTenticleRotMatrix);
 
-              var rightSmallTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[index]);
-              rightSmallTenticleRotMatrix.multiplyMatrices(rightSmallTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI / 9));
-              rightSmallTenticleRotMatrix.multiplyMatrices(rightSmallTenticleRotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8));
+              var rightSmallTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, RightSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, -Math.PI/9,0);
               rightSmallTentacles[index].setMatrix(rightSmallTenticleRotMatrix);
           }
 
@@ -379,6 +371,118 @@ function updateBody() {
           }
 
           break;
+
+      //Head move right
+      case(key == "H" && animate):
+          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+          if (time > time_end){
+              p = p1;
+              animate = false;
+              break;
+          }
+
+          p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
+
+          headRotMatrix = Helper.createObjectMatrixRelativeTo( null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, headMatrix, 0,p,0);
+          head.setMatrix(headRotMatrix);
+
+          noseRotMatrix = new THREE.Matrix4().multiplyMatrices(headRotMatrix, noseMatrix);
+          nose.setMatrix(noseRotMatrix);
+
+          var upLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upLeftLargeTentacleMatrix, 0,Math.PI/9,0);
+          upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
+
+          var lowLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowLeftLargeTentacleMatrix, 0,Math.PI/9,0);
+          lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
+
+          var upRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upRightLargeTentacleMatrix, 0,-Math.PI/9,0);
+          upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
+
+          var lowRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowRightLargeTentacleMatrix, 0,-Math.PI/9,0);
+          lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
+
+          for(var index = 1; index < 10; index++)
+          {
+              var leftSmallTenticleRotMatrix =  Helper.createObjectMatrixRelativeTo(noseRotMatrix, LeftSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, Math.PI/9,0);
+              leftSmallTentacles[index].setMatrix(leftSmallTenticleRotMatrix);
+
+              var rightSmallTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, RightSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, -Math.PI/9,0);
+              rightSmallTentacles[index].setMatrix(rightSmallTenticleRotMatrix);
+          }
+
+          break;
+
+      //Head move left
+      case(key == "G" && animate):
+          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+          if (time > time_end){
+              p = p1;
+              animate = false;
+              break;
+          }
+
+          p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
+
+          headRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, headMatrix, 0,p,0);
+          head.setMatrix(headRotMatrix);
+
+          noseRotMatrix = new THREE.Matrix4().multiplyMatrices(headRotMatrix, noseMatrix);
+          nose.setMatrix(noseRotMatrix);
+
+          var upLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upLeftLargeTentacleMatrix, 0,Math.PI/9,0);
+          upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
+
+          var lowLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowLeftLargeTentacleMatrix, 0,Math.PI/9,0);
+          lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
+
+          var upRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upRightLargeTentacleMatrix, 0,-Math.PI/9,0);
+          upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
+
+          var lowRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowRightLargeTentacleMatrix, 0,-Math.PI/9,0);
+          lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
+
+          for(var index = 1; index < 10; index++)
+          {
+              var leftSmallTenticleRotMatrix =  Helper.createObjectMatrixRelativeTo(noseRotMatrix, LeftSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, Math.PI/9,0);
+              leftSmallTentacles[index].setMatrix(leftSmallTenticleRotMatrix);
+
+              var rightSmallTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, RightSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, -Math.PI/9,0);
+              rightSmallTentacles[index].setMatrix(rightSmallTenticleRotMatrix);
+          }
+
+          break;
+
+      //Tail move right
+      case(key == "T" && animate):
+          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+          if (time > time_end){
+              p = p1;
+              animate = false;
+              break;
+          }
+
+          p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
+
+          var tailRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, tailMatrix, 0,p,0);
+          tail.setMatrix(tailRotMatrix);
+
+      //Tail move left
+      case(key == "V" && animate):
+          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+          if (time > time_end){
+              p = p1;
+              animate = false;
+              break;
+          }
+
+          p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
+
+          var tailRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, tailMatrix, 0,p,0);
+          tail.setMatrix(tailRotMatrix);
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
       // Note: Remember spacebar sets jumpcut/animate!
@@ -404,10 +508,18 @@ keyboard.domElement.addEventListener('keydown',function(event){
   else if(keyboard.eventMatches(event,"0")){    // 0: Set camera to neutral position, view reset
     camera.position.set(45,0,0);
     camera.lookAt(scene.position);}
-  else if(keyboard.eventMatches(event,"U")){ 
+  else if(keyboard.eventMatches(event,"U")){
     (key == "U")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "U")}
-  else if(keyboard.eventMatches(event,"D")){
-      (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/4,1), key = "D")}
+  else if(keyboard.eventMatches(event,"E")){
+      (key == "E")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/4,1), key = "E")}
+  else if(keyboard.eventMatches(event,"H")){
+      (key == "H")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/4,1), key = "H")}
+  else if(keyboard.eventMatches(event,"G")){
+      (key == "G")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "G")}
+  else if(keyboard.eventMatches(event,"T")){
+      (key == "T")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/6,1), key = "T")}
+  else if(keyboard.eventMatches(event,"V")){
+      (key == "V")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/6,1), key = "V")}
 
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
