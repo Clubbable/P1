@@ -253,48 +253,36 @@ function updateBody() {
           var noseRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, noseMatrix);
           nose.setMatrix(noseRotMatrix);
 
-          var frontRightPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, frontRightPawMatrix);
-          frontRightPawRotMatrix.multiplyMatrices(frontRightPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
+          var frontRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(torsoRotMatrix, frontRightPawMatrix, Math.PI/9,0,0);
           frontRightPaw.setMatrix(frontRightPawRotMatrix);
 
-          var frontLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, frontLeftPawMatrix);
-          frontLeftPawRotMatrix.multiplyMatrices(frontLeftPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
+          var frontLeftPawRotMatrix = Helper.createObjectMatrixRelativeTo(torsoRotMatrix, frontLeftPawMatrix, Math.PI/9,0,0);
           frontLeftPaw.setMatrix(frontLeftPawRotMatrix);
 
-          var backRightPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backRightPawMatrix);
-          backRightPawRotMatrix.multiplyMatrices(backRightPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
+          var backRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(torsoRotMatrix, backRightPawMatrix, Math.PI/9,0,0);
           backRightPaw.setMatrix(backRightPawRotMatrix);
 
-          var backLeftPawRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix, backLeftPawMatrix);
-          backLeftPawRotMatrix.multiplyMatrices(backLeftPawRotMatrix, Helper.createXAxisRotMatrixForDegree(Math.PI/9));
+          var backLeftPawRotMatrix = Helper.createObjectMatrixRelativeTo(torsoRotMatrix, backLeftPawMatrix, Math.PI/9,0,0);
           backLeftPaw.setMatrix(backLeftPawRotMatrix);
 
-          var upLeftLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, upLeftLargeTentacleMatrix);
-          upLeftLargeTenticleRotMatrix.multiplyMatrices(upLeftLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
+          var upLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upLeftLargeTentacleMatrix, 0,Math.PI/9,0);
           upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
 
-          var lowLeftLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowLeftLargeTentacleMatrix);
-          lowLeftLargeTenticleRotMatrix.multiplyMatrices(lowLeftLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI/9));
+          var lowLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowLeftLargeTentacleMatrix, 0,Math.PI/9,0);
           lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
 
-          var upRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, upRightLargeTentacleMatrix);
-          upRightLargeTenticleRotMatrix.multiplyMatrices(upRightLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
+          var upRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upRightLargeTentacleMatrix, 0,-Math.PI/9,0);
           upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
 
-          var lowRightLargeTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, lowRightLargeTentacleMatrix);
-          lowRightLargeTenticleRotMatrix.multiplyMatrices(lowRightLargeTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI/9));
+          var lowRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowRightLargeTentacleMatrix, 0,-Math.PI/9,0);
           lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
 
           for(var index = 1; index < 10; index++)
           {
-              var leftSmallTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, LeftSmallTentacleMatrices[index]);
-              leftSmallTenticleRotMatrix.multiplyMatrices(leftSmallTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(Math.PI / 9));
-              leftSmallTenticleRotMatrix.multiplyMatrices(leftSmallTenticleRotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8));
+              var leftSmallTenticleRotMatrix =  Helper.createObjectMatrixRelativeTo(noseRotMatrix, LeftSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, Math.PI/9,0);
               leftSmallTentacles[index].setMatrix(leftSmallTenticleRotMatrix);
 
-              var rightSmallTenticleRotMatrix = new THREE.Matrix4().multiplyMatrices(noseRotMatrix, RightSmallTentacleMatrices[index]);
-              rightSmallTenticleRotMatrix.multiplyMatrices(rightSmallTenticleRotMatrix, Helper.createYAxisRotMatrixForDegree(-Math.PI / 9));
-              rightSmallTenticleRotMatrix.multiplyMatrices(rightSmallTenticleRotMatrix, Helper.createXAxisRotMatrixForDegree(-Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8));
+              var rightSmallTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, RightSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, -Math.PI/9,0);
               rightSmallTentacles[index].setMatrix(rightSmallTenticleRotMatrix);
           }
 
