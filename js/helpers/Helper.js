@@ -34,12 +34,21 @@ Helper.createYAxisRotMatrixForDegree = function(degreeInRad)
     return rotate;
 }
 
-Helper.createObjectMatrixRelativeTo= function(relativeObjectMatrix, actualObjectMatrix, xRot, yRot, zRot)
+Helper.createObjectMatrixRelativeTo = function(relativeObjectMatrix, actualObjectMatrix, xRot, yRot, zRot)
 {
     var actualMatrix = new THREE.Matrix4().multiplyMatrices(relativeObjectMatrix, actualObjectMatrix);
     actualMatrix.multiplyMatrices(actualMatrix, Helper.createYAxisRotMatrixForDegree(yRot));
     actualMatrix.multiplyMatrices(actualMatrix, Helper.createXAxisRotMatrixForDegree(xRot));
 
     return actualMatrix;
+}
+
+Helper.addObjectToScene = function(objectGeometry, objectMatrix, normal, scene)
+{
+    var objectInstance =  new THREE.Mesh(objectGeometry,normal);
+    objectInstance.setMatrix(objectMatrix);
+    scene.add(objectInstance)
+
+    return objectInstance;
 }
 
