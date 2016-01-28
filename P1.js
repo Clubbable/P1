@@ -463,8 +463,65 @@ function updateBody() {
           }
 
           //Tail
-          var tailRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, tailMatrix, 0,p,0);
+          var tailRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, tailMatrix, 0,-p,0);
           tail.setMatrix(tailRotMatrix);
+
+          //Paws and Claws
+          if(swimCounter == 1) {
+              var frontRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix : torsoMatrix, frontRightPawMatrix, Math.PI / 9 + p, 0, 0);
+              frontRightPaw.setMatrix(frontRightPawRotMatrix);
+
+              var backLeftPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix : torsoMatrix, backLeftPawMatrix, Math.PI / 9 + p, 0, 0);
+              backLeftPaw.setMatrix(backLeftPawRotMatrix);
+
+              for(var index = 1; index < 6; index++)
+              {
+                  frontRightClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != frontRightPawRotMatrix ? frontRightPawRotMatrix : frontRightPawMatrix, ClawMatrices[index]));
+                  backLeftClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != backLeftPawRotMatrix ? backLeftPawRotMatrix : backLeftPawMatrix, ClawMatrices[index]));
+              }
+
+          }
+          else if(swimCounter == 2) {
+
+              var frontRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix : torsoMatrix, frontRightPawMatrix, Math.PI / 9 + (p + Math.PI / 6)/2, 0, 0);
+              frontRightPaw.setMatrix(frontRightPawRotMatrix);
+
+              var backLeftPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix : torsoMatrix, backLeftPawMatrix, Math.PI / 9 + (p + Math.PI / 6)/2, 0, 0);
+              backLeftPaw.setMatrix(backLeftPawRotMatrix);
+
+              for (var index = 1; index < 6; index++) {
+                  frontRightClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != frontRightPawRotMatrix ? frontRightPawRotMatrix : frontRightPawMatrix, ClawMatrices[index]));
+                  backLeftClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != backLeftPawRotMatrix ? backLeftPawRotMatrix : backLeftPawMatrix, ClawMatrices[index]));
+              }
+
+              var frontLeftPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix : torsoMatrix, frontLeftPawMatrix, Math.PI / 9 - (p - Math.PI / 6)/2, 0, 0);
+              frontLeftPaw.setMatrix(frontLeftPawRotMatrix);
+
+              var backRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix : torsoMatrix, backRightPawMatrix, Math.PI / 9 - (p - Math.PI / 6)/2, 0, 0);
+              backRightPaw.setMatrix(backRightPawRotMatrix);
+
+              for (var index = 1; index < 6; index++) {
+                  frontLeftClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != frontLeftPawRotMatrix ? frontLeftPawRotMatrix : frontLeftPawMatrix, ClawMatrices[index]));
+                  backRightClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != backRightPawRotMatrix ? backRightPawRotMatrix : backRightPawMatrix, ClawMatrices[index]));
+              }
+
+          }
+          else{
+
+              var frontLeftPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix : torsoMatrix, frontLeftPawMatrix, Math.PI / 9 - p, 0, 0);
+              frontLeftPaw.setMatrix(frontLeftPawRotMatrix);
+
+              var backRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix : torsoMatrix, backRightPawMatrix, Math.PI / 9 - p, 0, 0);
+              backRightPaw.setMatrix(backRightPawRotMatrix);
+
+              for(var index = 1; index < 6; index++)
+              {
+                  frontLeftClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != frontLeftPawRotMatrix ? frontLeftPawRotMatrix : frontLeftPawMatrix, ClawMatrices[index]));
+                  backRightClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != backRightPawRotMatrix ? backRightPawRotMatrix : backRightPawMatrix, ClawMatrices[index]));
+              }
+          }
+
+
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
       // Note: Remember spacebar sets jumpcut/animate!
@@ -482,52 +539,60 @@ var keyboard = new THREEx.KeyboardState();
 var grid_state = false;
 var key;
 
-keyboard.domElement.addEventListener('keydown',function(event)
-{
-      if (event.repeat)
+keyboard.domElement.addEventListener('keydown',function(event) {
+    if (event.repeat)
         return;
-      if(keyboard.eventMatches(event,"Z")){  // Z: Reveal/Hide helper grid
+    if (keyboard.eventMatches(event, "Z")) {  // Z: Reveal/Hide helper grid
         grid_state = !grid_state;
-        grid_state? scene.add(grid) : scene.remove(grid);}
-      else if(keyboard.eventMatches(event,"0")){    // 0: Set camera to neutral position, view reset
-        camera.position.set(45,0,0);
-        camera.lookAt(scene.position);}
-      else if(keyboard.eventMatches(event,"U")){
-        (key == "U")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "U")}
-      else if(keyboard.eventMatches(event,"E")){
-          (key == "E")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/4,1), key = "E")}
-      else if(keyboard.eventMatches(event,"H")){
-          (key == "H")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/4,1), key = "H")}
-      else if(keyboard.eventMatches(event,"G")){
-          (key == "G")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "G")}
-      else if(keyboard.eventMatches(event,"T")){
-          (key == "T")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/6,1), key = "T")}
-      else if(keyboard.eventMatches(event,"V")){
-          (key == "V")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/6,1), key = "V")}
-      else if(keyboard.eventMatches(event,"N")){
-          (key == "N")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/9,1), key = "N")}
-      else if(keyboard.eventMatches(event,"D")){
-          (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "D")}
-      else if(keyboard.eventMatches(event,"S"))
-      {
-          if (swimCounter == 0)
-          {
-              (key == "S") ? init_animation(p1, p0, time_length) : (init_animation(0, Math.PI / 6, 1), key = "S");
-              swimCounter += 1;
-          }
-          else if (swimCounter == 1)
-          {
-              (key == "S") ? init_animation(p1, p0, time_length) : (init_animation(0, -Math.PI / 3, 1), key = "S");
-              swimCounter += 1;
-          }
-          else
-          {
-              (key == "S") ? init_animation(p1, p0, time_length) : (init_animation(0, 0, 1), key = "S");
-              swimCounter = 0;
-          }
-      }
+        grid_state ? scene.add(grid) : scene.remove(grid);
+    }
+    else if (keyboard.eventMatches(event, "0")) {    // 0: Set camera to neutral position, view reset
+        camera.position.set(45, 0, 0);
+        camera.lookAt(scene.position);
+    }
+    else if (keyboard.eventMatches(event, "U")) {
+        (key == "U") ? init_animation(p1, p0, time_length) : (init_animation(0, Math.PI / 4, 1), key = "U")
+    }
+    else if (keyboard.eventMatches(event, "E")) {
+        (key == "E") ? init_animation(p1, p0, time_length) : (init_animation(0, -Math.PI / 4, 1), key = "E")
+    }
+    else if (keyboard.eventMatches(event, "H")) {
+        (key == "H") ? init_animation(p1, p0, time_length) : (init_animation(0, -Math.PI / 4, 1), key = "H")
+    }
+    else if (keyboard.eventMatches(event, "G")) {
+        (key == "G") ? init_animation(p1, p0, time_length) : (init_animation(0, Math.PI / 4, 1), key = "G")
+    }
+    else if (keyboard.eventMatches(event, "T")) {
+        (key == "T") ? init_animation(p1, p0, time_length) : (init_animation(0, Math.PI / 6, 1), key = "T")
+    }
+    else if (keyboard.eventMatches(event, "V")) {
+        (key == "V") ? init_animation(p1, p0, time_length) : (init_animation(0, -Math.PI / 6, 1), key = "V")
+    }
+    else if (keyboard.eventMatches(event, "N")) {
+        (key == "N") ? init_animation(p1, p0, time_length) : (init_animation(0, Math.PI / 9, 1), key = "N")
+    }
+    else if (keyboard.eventMatches(event, "D")) {
+        (key == "D") ? init_animation(p1, p0, time_length) : (init_animation(0, Math.PI / 4, 1), key = "D")
+    }
+    else if (keyboard.eventMatches(event, "S")) {
+        key = "S";
+        if(swimCounter == 0) {
+            init_animation(0, Math.PI / 6, 1);
+            swimCounter += 1;
+        }
+        else if(swimCounter == 1) {
+            init_animation(Math.PI / 6, -Math.PI / 6, time_length);
+            swimCounter += 1;
+        }
+        else if(swimCounter == 2){
+            init_animation(-Math.PI / 6, 0, time_length);
+            swimCounter = 0;
+        }
+    }
 
-  });
+});
+
+
 
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
