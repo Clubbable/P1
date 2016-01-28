@@ -441,27 +441,6 @@ function updateBody() {
           noseRotMatrix = new THREE.Matrix4().multiplyMatrices(headRotMatrix, noseMatrix);
           nose.setMatrix(noseRotMatrix);
 
-          var upLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upLeftLargeTentacleMatrix, 0,Math.PI/9,0);
-          upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
-
-          var lowLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowLeftLargeTentacleMatrix, 0,Math.PI/9,0);
-          lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
-
-          var upRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upRightLargeTentacleMatrix, 0,-Math.PI/9,0);
-          upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
-
-          var lowRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowRightLargeTentacleMatrix, 0,-Math.PI/9,0);
-          lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
-
-          for(var index = 1; index < 10; index++)
-          {
-              var leftSmallTenticleRotMatrix =  Helper.createObjectMatrixRelativeTo(noseRotMatrix, LeftSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, Math.PI/9,0);
-              leftSmallTentacles[index].setMatrix(leftSmallTenticleRotMatrix);
-
-              var rightSmallTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, RightSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, -Math.PI/9,0);
-              rightSmallTentacles[index].setMatrix(rightSmallTenticleRotMatrix);
-          }
-
           //Tail
           var tailRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, tailMatrix, 0,-p,0);
           tail.setMatrix(tailRotMatrix);
@@ -478,6 +457,27 @@ function updateBody() {
               {
                   frontRightClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != frontRightPawRotMatrix ? frontRightPawRotMatrix : frontRightPawMatrix, ClawMatrices[index]));
                   backLeftClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != backLeftPawRotMatrix ? backLeftPawRotMatrix : backLeftPawMatrix, ClawMatrices[index]));
+              }
+
+              var upLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upLeftLargeTentacleMatrix, 0,Math.PI/9+p,0);
+              upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
+
+              var lowLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowLeftLargeTentacleMatrix, 0,Math.PI/9+p,0);
+              lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
+
+              var upRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upRightLargeTentacleMatrix, 0,-Math.PI/9-p,0);
+              upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
+
+              var lowRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowRightLargeTentacleMatrix, 0,-Math.PI/9-p,0);
+              lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
+
+              for(var index = 1; index < 10; index++)
+              {
+                  var leftSmallTenticleRotMatrix =  Helper.createObjectMatrixRelativeTo(noseRotMatrix, LeftSmallTentacleMatrices[index],  -Math.PI / 9-p + 2*(index - 1) * (Math.PI / 9 +p) / 8, Math.PI/9+p,0);
+                  leftSmallTentacles[index].setMatrix(leftSmallTenticleRotMatrix);
+
+                  var rightSmallTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, RightSmallTentacleMatrices[index], -Math.PI / 9-p + 2*(index - 1) * (Math.PI / 9 +p) / 8, -Math.PI/9-p,0);
+                  rightSmallTentacles[index].setMatrix(rightSmallTenticleRotMatrix);
               }
 
           }
@@ -505,6 +505,27 @@ function updateBody() {
                   backRightClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != backRightPawRotMatrix ? backRightPawRotMatrix : backRightPawMatrix, ClawMatrices[index]));
               }
 
+              var upLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upLeftLargeTentacleMatrix, 0,Math.PI/9+Math.PI/6,0);
+              upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
+
+              var lowLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowLeftLargeTentacleMatrix, 0,Math.PI/9+Math.PI/6,0);
+              lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
+
+              var upRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upRightLargeTentacleMatrix, 0,-Math.PI/9-Math.PI/6,0);
+              upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
+
+              var lowRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowRightLargeTentacleMatrix, 0,-Math.PI/9-Math.PI/6,0);
+              lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
+
+              for(var index = 1; index < 10; index++)
+              {
+                  var leftSmallTenticleRotMatrix =  Helper.createObjectMatrixRelativeTo(noseRotMatrix, LeftSmallTentacleMatrices[index],  -Math.PI / 9-Math.PI/6 + 2*(index - 1) * (Math.PI / 9 +Math.PI/6) / 8, Math.PI/9+Math.PI/6,0);
+                  leftSmallTentacles[index].setMatrix(leftSmallTenticleRotMatrix);
+
+                  var rightSmallTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, RightSmallTentacleMatrices[index], -Math.PI / 9-Math.PI/6 + 2*(index - 1) * (Math.PI / 9 +Math.PI/6) / 8, -Math.PI/9-Math.PI/6,0);
+                  rightSmallTentacles[index].setMatrix(rightSmallTenticleRotMatrix);
+              }
+
           }
           else{
 
@@ -518,6 +539,27 @@ function updateBody() {
               {
                   frontLeftClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != frontLeftPawRotMatrix ? frontLeftPawRotMatrix : frontLeftPawMatrix, ClawMatrices[index]));
                   backRightClaw[index].setMatrix(new THREE.Matrix4().multiplyMatrices(null != backRightPawRotMatrix ? backRightPawRotMatrix : backRightPawMatrix, ClawMatrices[index]));
+              }
+
+              var upLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upLeftLargeTentacleMatrix, 0,Math.PI/9 -p,0);
+              upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
+
+              var lowLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowLeftLargeTentacleMatrix, 0,Math.PI/9 -p,0);
+              lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
+
+              var upRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upRightLargeTentacleMatrix, 0,-Math.PI/9 +p,0);
+              upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
+
+              var lowRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowRightLargeTentacleMatrix, 0,-Math.PI/9 +p,0);
+              lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
+
+              for(var index = 1; index < 10; index++)
+              {
+                  var leftSmallTenticleRotMatrix =  Helper.createObjectMatrixRelativeTo(noseRotMatrix, LeftSmallTentacleMatrices[index],  -Math.PI /9 +p + 2*(index - 1) * (Math.PI / 9 -p) / 8, Math.PI/9-p,0);
+                  leftSmallTentacles[index].setMatrix(leftSmallTenticleRotMatrix);
+
+                  var rightSmallTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, RightSmallTentacleMatrices[index], -Math.PI /9 +p + 2*(index - 1) * (Math.PI / 9 -p) / 8, -Math.PI/9+p,0);
+                  rightSmallTentacles[index].setMatrix(rightSmallTenticleRotMatrix);
               }
           }
 
