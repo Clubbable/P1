@@ -75,7 +75,7 @@ var headGeometry = Helper.createGeometry(new THREE.Matrix4().set(3.5,0,0,0, 0,3.
 var noseGeometry = Helper.createGeometry(new THREE.Matrix4().set(2.3,0,0,0, 0,2.3,0,0, 0,0,1,0, 0,0,0,1));
 var tailGeometry = Helper.createGeometry(new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,7,0, 0,0,0,1));
 var PawGeometry = Helper.createGeometry(new THREE.Matrix4().set(3,0,0,0, 0,1,0,0, 0,0,5,0, 0,0,0,1));
-var clawGeometry = Helper.createGeometry(new THREE.Matrix4().set(0.4,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1));
+var clawGeometry = Helper.createGeometry(new THREE.Matrix4().set(0.4,0,0,0, 0,0.7,0,0, 0,0,2,0, 0,0,0,1));
 var largeTenticleGeometry = Helper.createGeometry(new THREE.Matrix4().set(0.4,0,0,0, 0,0.4,0,0, 0,0,2,0, 0,0,0,1));
 var smallTenticleGeometry = Helper.createGeometry(new THREE.Matrix4().set(0.2,0,0,0, 0,0.2,0,0, 0,0,3,0, 0,0,0,1));
 
@@ -94,7 +94,7 @@ var backLeftPawMatrix = new THREE.Matrix4().set(1,0,0,2.5, 0,1,0,-3.5, 0,0,1,-2,
 var ClawMatrices = [];
 for(var index = 1; index < 6; index++)
 {
-    ClawMatrices[index] = new THREE.Matrix4().set(1,0,0,1.4-[index-1]*0.7, 0,1,0,0, 0,0,1,3, 0,0,0,1);
+    ClawMatrices[index] = new THREE.Matrix4().set(1,0,0,1.4-[index-1]*0.7, 0,1,0,-0.2, 0,0,1,3, 0,0,0,1);
 }
 
 var upLeftLargeTentacleMatrix = new THREE.Matrix4().set(1,0,0,0.5, 0,1,0,0.5, 0,0,1,0.5, 0,0,0,1);
@@ -224,6 +224,8 @@ function init_animation(p_start,p_end,t_length){
 var torsoRotMatrix;
 var headRotMatrix;
 var noseRotMatrix;
+
+var swimCounter = 0;
 
 function updateBody() {
   switch(true)
@@ -358,6 +360,7 @@ function updateBody() {
 
           break;
 
+      //Nose fanning out
       case(key == "N" && animate):
           var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -390,10 +393,78 @@ function updateBody() {
               rightSmallTentacles[index].setMatrix(rightSmallTenticleRotMatrix);
           }
 
+          break;
 
+      case(key == "D" && animate):
+          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
+          if (time > time_end){
+              p = p1;
+              animate = false;
+              break;
+          }
 
+          p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
 
+          var frontRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, frontRightPawMatrix, Math.PI/9+p,0,0);
+          frontRightPaw.setMatrix(frontRightPawRotMatrix);
+
+          var frontLeftPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, frontLeftPawMatrix, Math.PI/9+p,0,0);
+          frontLeftPaw.setMatrix(frontLeftPawRotMatrix);
+
+          for(var index = 1; index < 6; index++)
+          {
+              var frontRightClawRotMatrix = Helper.createObjectMatrixRelativeTo(null != frontRightPawRotMatrix ? frontRightPawRotMatrix:frontRightPawMatrix, ClawMatrices[index], p,0,0);
+              frontRightClaw[index].setMatrix(frontRightClawRotMatrix);
+              var frontLeftClawRotMatrix = Helper.createObjectMatrixRelativeTo(null != frontLeftPawRotMatrix ? frontLeftPawRotMatrix:frontLeftPawMatrix, ClawMatrices[index], p,0,0);
+              frontLeftClaw[index].setMatrix(frontLeftClawRotMatrix);
+          }
+
+          break;
+
+      case(key == "S" && animate):
+
+          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+          if (time > time_end){
+              p = p1;
+              animate = false;
+              break;
+          }
+
+          p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
+
+          //Head
+          headRotMatrix = Helper.createObjectMatrixRelativeTo( null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, headMatrix, 0,p,0);
+          head.setMatrix(headRotMatrix);
+
+          noseRotMatrix = new THREE.Matrix4().multiplyMatrices(headRotMatrix, noseMatrix);
+          nose.setMatrix(noseRotMatrix);
+
+          var upLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upLeftLargeTentacleMatrix, 0,Math.PI/9,0);
+          upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
+
+          var lowLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowLeftLargeTentacleMatrix, 0,Math.PI/9,0);
+          lowLeftLargeTentacle.setMatrix(lowLeftLargeTenticleRotMatrix);
+
+          var upRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, upRightLargeTentacleMatrix, 0,-Math.PI/9,0);
+          upRightLargeTentacle.setMatrix(upRightLargeTenticleRotMatrix);
+
+          var lowRightLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, lowRightLargeTentacleMatrix, 0,-Math.PI/9,0);
+          lowRightLargeTentacle.setMatrix(lowRightLargeTenticleRotMatrix);
+
+          for(var index = 1; index < 10; index++)
+          {
+              var leftSmallTenticleRotMatrix =  Helper.createObjectMatrixRelativeTo(noseRotMatrix, LeftSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, Math.PI/9,0);
+              leftSmallTentacles[index].setMatrix(leftSmallTenticleRotMatrix);
+
+              var rightSmallTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(noseRotMatrix, RightSmallTentacleMatrices[index], -Math.PI / 9 + 2*(index - 1) * (Math.PI / 9) / 8, -Math.PI/9,0);
+              rightSmallTentacles[index].setMatrix(rightSmallTenticleRotMatrix);
+          }
+
+          //Tail
+          var tailRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, tailMatrix, 0,p,0);
+          tail.setMatrix(tailRotMatrix);
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
       // Note: Remember spacebar sets jumpcut/animate!
@@ -410,38 +481,58 @@ function updateBody() {
 var keyboard = new THREEx.KeyboardState();
 var grid_state = false;
 var key;
-keyboard.domElement.addEventListener('keydown',function(event){
-  if (event.repeat)
-    return;
-  if(keyboard.eventMatches(event,"Z")){  // Z: Reveal/Hide helper grid
-    grid_state = !grid_state;
-    grid_state? scene.add(grid) : scene.remove(grid);}   
-  else if(keyboard.eventMatches(event,"0")){    // 0: Set camera to neutral position, view reset
-    camera.position.set(45,0,0);
-    camera.lookAt(scene.position);}
-  else if(keyboard.eventMatches(event,"U")){
-    (key == "U")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "U")}
-  else if(keyboard.eventMatches(event,"E")){
-      (key == "E")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/4,1), key = "E")}
-  else if(keyboard.eventMatches(event,"H")){
-      (key == "H")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/4,1), key = "H")}
-  else if(keyboard.eventMatches(event,"G")){
-      (key == "G")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "G")}
-  else if(keyboard.eventMatches(event,"T")){
-      (key == "T")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/6,1), key = "T")}
-  else if(keyboard.eventMatches(event,"V")){
-      (key == "V")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/6,1), key = "V")}
-  else if(keyboard.eventMatches(event,"N")){
-      (key == "N")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/9,1), key = "N")}
+
+keyboard.domElement.addEventListener('keydown',function(event)
+{
+      if (event.repeat)
+        return;
+      if(keyboard.eventMatches(event,"Z")){  // Z: Reveal/Hide helper grid
+        grid_state = !grid_state;
+        grid_state? scene.add(grid) : scene.remove(grid);}
+      else if(keyboard.eventMatches(event,"0")){    // 0: Set camera to neutral position, view reset
+        camera.position.set(45,0,0);
+        camera.lookAt(scene.position);}
+      else if(keyboard.eventMatches(event,"U")){
+        (key == "U")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "U")}
+      else if(keyboard.eventMatches(event,"E")){
+          (key == "E")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/4,1), key = "E")}
+      else if(keyboard.eventMatches(event,"H")){
+          (key == "H")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/4,1), key = "H")}
+      else if(keyboard.eventMatches(event,"G")){
+          (key == "G")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "G")}
+      else if(keyboard.eventMatches(event,"T")){
+          (key == "T")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/6,1), key = "T")}
+      else if(keyboard.eventMatches(event,"V")){
+          (key == "V")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/6,1), key = "V")}
+      else if(keyboard.eventMatches(event,"N")){
+          (key == "N")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/9,1), key = "N")}
+      else if(keyboard.eventMatches(event,"D")){
+          (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "D")}
+      else if(keyboard.eventMatches(event,"S"))
+      {
+          if (swimCounter == 0)
+          {
+              (key == "S") ? init_animation(p1, p0, time_length) : (init_animation(0, Math.PI / 6, 1), key = "S");
+              swimCounter += 1;
+          }
+          else if (swimCounter == 1)
+          {
+              (key == "S") ? init_animation(p1, p0, time_length) : (init_animation(0, -Math.PI / 3, 1), key = "S");
+              swimCounter += 1;
+          }
+          else
+          {
+              (key == "S") ? init_animation(p1, p0, time_length) : (init_animation(0, 0, 1), key = "S");
+              swimCounter = 0;
+          }
+      }
+
+  });
 
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
   // Note: Remember spacebar sets jumpcut/animate! 
   // Hint: Look up "threex.keyboardstate by Jerome Tienne" for more info.
-
-
-
-    });
 
 // SETUP UPDATE CALL-BACK
 // Hint: It is useful to understand what is being updated here, the effect, and why.
