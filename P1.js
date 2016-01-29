@@ -229,19 +229,20 @@ var swimCounter = 0;
 var jumpCut = false;
 
 function updateBody() {
+
+    var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+    if (time > time_end){
+        p = p1;
+        animate = false;
+    }
+
+    jumpCut ? p = p1 : p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
+
   switch(true)
   {
       //Body tilt up/down
       case((key == "U" || key == "E" )&& animate):
-          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
-
-          if (time > time_end){
-            p = p1;
-            animate = false;
-            break;
-          }
-
-          jumpCut ? p = p1 : p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
 
           var rotateZ = new THREE.Matrix4().set(1,        0,         0,        0,
                                                 0, Math.cos(-p),-Math.sin(-p), 0,
@@ -305,15 +306,6 @@ function updateBody() {
 
       //Head move right/left
       case((key == "H" || key == "G") && animate):
-          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
-
-          if (time > time_end){
-              p = p1;
-              animate = false;
-              break;
-          }
-
-          jumpCut ? p = p1 : p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
 
           headRotMatrix = Helper.createObjectMatrixRelativeTo( null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, headMatrix, 0,p,0);
           head.setMatrix(headRotMatrix);
@@ -346,15 +338,6 @@ function updateBody() {
 
       //Tail move right/left
       case((key == "T" || key == "V") && animate):
-          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
-
-          if (time > time_end){
-              p = p1;
-              animate = false;
-              break;
-          }
-
-          jumpCut ? p = p1 : p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
 
           var tailRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, tailMatrix, 0,p,0);
           tail.setMatrix(tailRotMatrix);
@@ -363,15 +346,6 @@ function updateBody() {
 
       //Nose fanning out
       case(key == "N" && animate):
-          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
-
-          if (time > time_end){
-              p = p1;
-              animate = false;
-              break;
-          }
-
-          jumpCut ? p = p1 : p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
 
           var upLeftLargeTenticleRotMatrix = Helper.createObjectMatrixRelativeTo(null != noseRotMatrix ? noseRotMatrix:noseMatrixRelativeToHead, upLeftLargeTentacleMatrix, -p,Math.PI/9+p,0);
           upLeftLargeTentacle.setMatrix(upLeftLargeTenticleRotMatrix);
@@ -396,16 +370,8 @@ function updateBody() {
 
           break;
 
+      //Digging
       case(key == "D" && animate):
-          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
-
-          if (time > time_end){
-              p = p1;
-              animate = false;
-              break;
-          }
-
-          jumpCut ? p = p1 : p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
 
           var frontRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, frontRightPawMatrix, Math.PI/9+p,0,0);
           frontRightPaw.setMatrix(frontRightPawRotMatrix);
@@ -423,31 +389,23 @@ function updateBody() {
 
           break;
 
+      //Swimming
       case(key == "S" && animate):
 
-          var time = clock.getElapsedTime(); // t seconds passed since the clock started.
-
-          if (time > time_end){
-              p = p1;
-              animate = false;
-              break;
-          }
-
-          jumpCut ? p = p1 : p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame
-
-          //Head
+          //Head Logic
           headRotMatrix = Helper.createObjectMatrixRelativeTo( null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, headMatrix, 0,p,0);
           head.setMatrix(headRotMatrix);
 
           noseRotMatrix = new THREE.Matrix4().multiplyMatrices(headRotMatrix, noseMatrix);
           nose.setMatrix(noseRotMatrix);
 
-          //Tail
+          //Tail Logic
           var tailRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix:torsoMatrix, tailMatrix, 0,-p,0);
           tail.setMatrix(tailRotMatrix);
 
-          //Paws and Claws
+          //Paws and Claws and Nose Logic
           if(swimCounter == 1) {
+
               var frontRightPawRotMatrix = Helper.createObjectMatrixRelativeTo(null != torsoRotMatrix ? torsoRotMatrix : torsoMatrix, frontRightPawMatrix, Math.PI / 9 + p, 0, 0);
               frontRightPaw.setMatrix(frontRightPawRotMatrix);
 
